@@ -3,264 +3,829 @@
 // Format: { id, section, text, type ("single"|"multi"), options:[], correct:[], explanation:"" }
 
 const QUESTIONS = [
-  // ─── SECTION: CMDB Governance & Data Manager ───
-  {id:1,section:"CMDB Governance & Data Manager",text:"A CMDB Administrator is beginning the journey of populating the CMDB and needs to verify that any data which is no longer useful or applicable is removed. Which governance management tool will accomplish this?",type:"single",options:["CMDB Health Dashboard","CMDB Data Manager","CMDB and CSDM Data Foundations Dashboard","CI Class Manager","De-duplication Templates"],correct:[1],explanation:"CMDB Data Manager is the governance tool used to manage the lifecycle of CI records — archiving, retiring, and deleting records that are no longer useful. The CMDB Health Dashboard monitors health metrics but does not directly remove data."},
-  {id:2,section:"CMDB Governance & Data Manager",text:"A CMDB Administrator group aims to establish a process for receiving task notifications when the Support Group or Managed By Group fields are not populated for operational Linux servers. Which ServiceNow modules can be leveraged to configure recommended fields and generate task records?",type:"single",options:["Dynamic CI groups and CMDB groups","CMDB Workspace and Scheduled Jobs","Technical Service Offerings and Dynamic CI groups","CI Class Manager and Health Preferences"],correct:[0],explanation:"Dynamic CI Groups group CIs by encoded queries (e.g., Linux servers), and CMDB Groups assign governance responsibilities. Together they enable task generation when recommended fields are missing."},
-  {id:3,section:"CMDB Governance & Data Manager",text:"Using existing baseline Data Manager policies, what condition must a CI meet before it can be archived or deleted?",type:"single",options:["Be retired and in end of life","Be fully operational and in use","Be marked as inactive","Be marked as critical"],correct:[0],explanation:"Baseline CMDB Data Manager archive/delete policies require the CI to be fully 'Retired' and in 'End of Life' state. Simply marking a CI inactive is not sufficient — the full retirement lifecycle must be completed."},
-  {id:4,section:"CMDB Governance & Data Manager",text:"A data center has many servers. The CMDB Administrator wants to confirm that all servers exist. Which Data Manager policy type does the Administrator implement?",type:"single",options:["Attestation","Verification","Certification","Promotion"],correct:[0],explanation:"Attestation policy type sends tasks to CI owners to acknowledge (attest) that a CI still physically exists. Certification validates specific data attributes rather than physical existence."},
-  {id:5,section:"CMDB Governance & Data Manager",text:"Which default user groups are available when setting up a CMDB Data Manager policy with Assignment type set to 'User Group Field'? (Choose 2)",type:"multi",options:["Managed By Group","Support Group","Owned by Group","Assignment Group"],correct:[0,1],explanation:"When Assignment type is 'User Group Field', the two default groups available are Managed By Group and Support Group — the primary governance groups in CMDB."},
-  {id:6,section:"CMDB Governance & Data Manager",text:"Which factor is most critical for successfully operationalizing the CMDB in ServiceNow?",type:"single",options:["Allowing IT teams to modify CMDB records as needed to promote flexibility","Establishing clear governance and continuously monitoring CMDB health","Populating the CMDB with as much data as possible","Relying on automated discovery tools to maintain and update CMDB records"],correct:[1],explanation:"Clear governance and continuous health monitoring are the most critical factors. Without governance, even a well-populated CMDB quickly degrades in quality."},
-  {id:7,section:"CMDB Governance & Data Manager",text:"A Configuration Management team wants to confirm that all servers in the CMDB are correctly associated with their location. Which CMDB Data Manager policy type does the team create?",type:"single",options:["Archive","Retire","Certification","Attestation","Delete"],correct:[2],explanation:"Certification generates tasks for CI owners to confirm and certify to the accuracy of specific CI data attributes like location."},
-  {id:8,section:"CMDB Governance & Data Manager",text:"Where does a user review and manage generated tasks after configuring CMDB Data Manager policies?",type:"single",options:["CMDB Health Dashboard > Duplicate CIs tab","CMDB Workspace > Management tab","CMDB Health Dashboard > Audit tab","CMDB Workspace > My Work tab"],correct:[3],explanation:"Generated Data Manager policy tasks are reviewed and managed in CMDB Workspace > My Work tab — the centralized location for assigned CMDB governance tasks."},
-  {id:9,section:"CMDB Governance & Data Manager",text:"A CMDB Configuration Manager sets up the following data filter for a certification policy using CMDB Data Manager.\n\n• Table: Server [cmdb_ci_server]\n• Filter: Operating System | contains | Server  OR  Operating System | contains | Linux\n\nWhich operating systems are affected by this policy?",type:"multi",options:["Windows 2019 Datacenter","Windows Server 2022 Datacenter","Linux CentOS","AIX"],correct:[1,2],explanation:"The filter uses OR logic with string matching. 'Windows Server 2022 Datacenter' contains the word 'Server' so it matches the first condition. 'Linux CentOS' contains the word 'Linux' so it matches the second condition. 'Windows 2019 Datacenter' does not contain 'Server' or 'Linux'. 'AIX' does not contain either word."},
-  {id:10,section:"CMDB Governance & Data Manager",text:"The Configuration Management team wants to confirm that all servers in the CMDB actually exist in the data center. Which CMDB Data Manager policy type would the team create?",type:"single",options:["Attestation","Certification","Retire","Archive","Delete"],correct:[0],explanation:"Attestation policy type confirms physical existence of CIs by generating tasks for CI owners to acknowledge. Certification validates data accuracy of specific attributes, not physical existence."},
-  {id:11,section:"CMDB Governance & Data Manager",text:"What is the difference between Data Certification and Attestation policies when managing a CI?",type:"single",options:["Attestation requires correcting specific attributes of a CI, while Data Certification tracks acknowledgement the CI still exists","Attestation can be assigned to a Group or an individual, while Data Certification can only be assigned to an individual","Attestation can be scheduled, while Data Certification cannot be scheduled","Attestation tracks acknowledgement the CI still exists, while Data Certification requires validating specific attributes of a CI"],correct:[3],explanation:"Attestation = CI owner acknowledges the CI still exists (existence confirmation). Data Certification = CI owner validates that specific attributes of a CI are accurate (attribute validation). These are distinct policy purposes."},
-  {id:12,section:"CMDB Governance & Data Manager",text:"A CMDB Administrator wants to remove all Linux Servers in the organization that have not been updated in six months. Which recommended action does the Administrator take in Data Manager?",type:"single",options:["Create an archive policy","Create a business rule","Create a scheduled job"],correct:[0],explanation:"To remove Linux Servers not updated in 6 months, create an archive policy in CMDB Data Manager filtered by class (Linux Server) and staleness conditions, automating the cleanup process."},
-  {id:13,section:"CMDB Governance & Data Manager",text:"Which are CMDB Data Manager end-of-life policy types? (Choose 2)",type:"multi",options:["Retire","Disposed","Archive","Decommission","Lost"],correct:[0,2],explanation:"CMDB Data Manager end-of-life policy types are Retire (marks CI as retired) and Archive (moves CI data to archive while retaining it). Decommission is a lifecycle state, not a Data Manager policy type."},
-  {id:14,section:"CMDB Governance & Data Manager",text:"Which shows the most complete list of policy types provided by the CMDB Data Manager?",type:"single",options:["Attestation, Retire, and Certification","Archive and Delete","Retire, Archive, Attestation, Certification, and Delete","Delete, Attestation, Retire, and Certification"],correct:[2],explanation:"CMDB Data Manager provides five policy types: Retire, Archive, Attestation, Certification, and Delete. This is the complete list."},
-  {id:15,section:"CMDB Governance & Data Manager",text:"A CMDB Administrator wants to ensure all short-lived CIs not discovered in the past week are removed. After retiring the CI records, which recommended action does the Administrator take?",type:"single",options:["Create a scheduled job","Create a delete policy","Create a business rule"],correct:[1],explanation:"After retiring short-lived CIs, create a delete policy in CMDB Data Manager. Delete policies automate the removal of retired CIs meeting specified criteria, completing the lifecycle management."},
-  {id:16,section:"CMDB Governance & Data Manager",text:"A Configuration Manager needs to enable a CMDB Data Manager policy to remove records from a CI Class while retaining the ability to restore them within a specified period. Which policy type should be created?",type:"single",options:["Retire","Delete","Certification","Archive"],correct:[3],explanation:"Archive policy removes CI records from active view while retaining them in an archive for a specified retention period, allowing restoration if needed. Delete permanently removes records with no recovery option."},
-  {id:17,section:"CMDB Governance & Data Manager",text:"Which is a purpose or requirement of CMDB Data Manager in ServiceNow?",type:"single",options:["Encrypts archived records for enhanced security","Automates the archival and deletion of records based on retention policies","Automates the enforcement of relationship rules between CIs in the CMDB"],correct:[1],explanation:"CMDB Data Manager's primary purpose is to automate the archival and deletion of CI records based on configured retention policies and lifecycle states."},
-  {id:18,section:"CMDB Governance & Data Manager",text:"A CMDB Data Manager needs to access the ServiceNow platform to create, publish, and manage policies. Where can the Data Manager do this?",type:"single",options:["CMDB Workspace Management tab","CMDB Workspace CMDB 360 tab","Service Operations Workspace","CI Class Manager"],correct:[0],explanation:"CMDB Data Manager policies are created and managed through the CMDB Workspace > Management tab. This is the centralized location for all Data Manager policy administration."},
-  {id:19,section:"CMDB Governance & Data Manager",text:"A Configuration Management Process Owner needs to configure Data Manager for policy tasks to be correctly assigned and aligned with the group attribute assigned to a class in CI Class Manager. Which is the recommended field for policy task assignment?",type:"single",options:["Approval group","Change group","Support group","Managed by group"],correct:[3],explanation:"The 'Managed by group' field is the recommended field for Data Manager policy task assignment when aligning with CI Class Manager group attributes. Managed by Group represents the group responsible for the CI."},
-  {id:20,section:"CMDB Governance & Data Manager",text:"A CMDB Configuration Manager intends to implement Data Manager delete and archive policies for server records in the New York datacenter. In which lifecycle state would servers be affected?",type:"single",options:["Inventory - Available","End of Life - Retired","Missing - Stolen","In any lifecycle state"],correct:[1],explanation:"CMDB Data Manager delete and archive policies operate on CIs in the 'End of Life - Retired' lifecycle state. Policies target retired CIs, not active or available ones."},
-
-  // ─── SECTION: CMDB Health Dashboard ───
-  {id:21,section:"CMDB Health Dashboard",text:"A CMDB Administrator wants to leverage the Staleness metric from the CMDB Health Dashboard - Correctness Scorecard. What is the default duration of this metric?",type:"single",options:["60 days","24 hours","7 days","30 days"],correct:[0],explanation:"The Staleness metric default duration is 60 days. A CI is considered stale if sys_updated_on has not been updated within this period, indicating potentially outdated information."},
-  {id:22,section:"CMDB Health Dashboard",text:"Which CMDB Health Dashboard metric represents: 'CMDB records that are no longer actively updated, but remain stored in the database'?",type:"single",options:["Duplicate","Required","Orphan","Stale","Recommended","Audit"],correct:[3],explanation:"'Stale' CIs are records that have not been updated and may be outdated. 'Orphan' CIs have lost their logical or physical relationships with other CIs — a different concept."},
-  {id:23,section:"CMDB Health Dashboard",text:"Which types of documentation can be expected from a CMDB Data Foundation playbook? (Choose 2)",type:"multi",options:["Problem Overview","Automated Remediations","Root Cause","Problem Analysis"],correct:[0,3],explanation:"CMDB Data Foundation Playbooks provide (A) Problem Overview and (D) Problem Analysis. They do not provide automated remediations or root cause analysis — those require manual investigation."},
-  {id:24,section:"CMDB Health Dashboard",text:"What are the benefits of using the CMDB Data Foundation Dashboard playbooks? (Choose 2)",type:"multi",options:["Offers insight into the downstream impacts of poorly performing metrics","Offers remediation templates to improve poorly performing metrics","Offers automated scripts to resolve poorly performing metrics","Offers remediation options to address and improve poorly performing metrics"],correct:[0,3],explanation:"Playbooks offer (A) insights into downstream impacts of poor metrics and (D) remediation options and guidance. They do not provide automated scripts or pre-built templates."},
-  {id:25,section:"CMDB Health Dashboard",text:"Which CMDB Health Dashboard scorecard tracks which CIs and CI classes are missing key data?",type:"single",options:["Correctness","Completeness","Compliance"],correct:[1],explanation:"The Completeness scorecard tracks whether CIs have required and recommended fields populated. Missing key data is a Completeness issue."},
-  {id:26,section:"CMDB Health Dashboard",text:"A CMDB Administrator needs insights into how their CMDB is configured according to ServiceNow recommended practice. Which should be used?",type:"single",options:["CMDB Data Foundation Dashboard","CMDB Health Dashboard","CMDB Data Manager","CMDB Workspace"],correct:[0],explanation:"The CMDB Data Foundation Dashboard shows CMDB configuration relative to ServiceNow recommended practices, providing metrics and playbooks for CSDM alignment. The Health Dashboard focuses on CI data quality."},
-  {id:27,section:"CMDB Health Dashboard",text:"A Configuration Management team wants to minimize stale CIs. Which CMDB Health Dashboard scorecard displays stale CI information?",type:"single",options:["Compliance","Completeness","Correctness"],correct:[2],explanation:"Staleness is a sub-metric of the Correctness scorecard. Correctness measures whether CI data is accurate and up-to-date, including the staleness of records."},
-  {id:28,section:"CMDB Health Dashboard",text:"The CMDB Health Dashboard is based on three KPIs: Correctness, Compliance, and Completeness. Which KPI does the 'Required' sub-metric belong to?",type:"single",options:["Completeness","Compliance","Correctness"],correct:[0],explanation:"'Required' fields (those that must be populated) are a sub-metric of Completeness. 'Audit' belongs to Compliance. 'Orphan' belongs to Correctness."},
-  {id:29,section:"CMDB Health Dashboard",text:"During review of the CMDB Data Foundations Dashboard, the Administrator sees Remediation Playbooks. How can Playbooks assist the Administrator in resolving CMDB issues?",type:"single",options:["Playbooks can help analyze and fix issues","Playbooks can automatically track common CMDB issues and output metrics","Playbooks can be installed in the instance to automatically fix issues"],correct:[0],explanation:"CMDB Remediation Playbooks provide step-by-step guidance to help administrators analyze and fix CMDB health issues. They guide — not automate — the remediation process."},
-  {id:30,section:"CMDB Health Dashboard",text:"A CMDB Administrator needs to provide Duplicate CI, Orphan CI, and Stale CI metrics for a leadership presentation. Which scorecard provides this information on the CMDB Health Dashboard?",type:"single",options:["Compliance","Correctness","Completeness"],correct:[1],explanation:"Duplicate CIs, Orphan CIs, and Stale CIs are all sub-metrics of the Correctness scorecard on the CMDB Health Dashboard."},
-  {id:31,section:"CMDB Health Dashboard",text:"A CMDB Administrator is evaluating whether to monitor metrics on the CMDB Data Foundation Dashboard. Which benefits support the decision? (Choose 2)",type:"multi",options:["Provides a list of all CIs that failed health audits","Provides metrics for CIs Processed by the IRE","Reports on all orphan CIs in the CMDB","Provides metrics on active CIs updated in the last 90 days"],correct:[1,3],explanation:"The CMDB Data Foundation Dashboard provides (B) metrics for CIs processed by the IRE and (D) metrics on active CIs updated recently. Orphan CI reporting is a CMDB Health Dashboard function, not the Data Foundation Dashboard."},
-  {id:32,section:"CMDB Health Dashboard",text:"A CMDB Administrator knows that the CMDB Data Foundation Dashboard is a resource to monitor and improve data quality. What is a benefit of this dashboard?",type:"single",options:["Provides the ability to configure health-related metrics","Provides the ability to resolve certification policy tasks","Provides key health-related metrics to make decisions"],correct:[2],explanation:"The CMDB Data Foundation Dashboard provides key health-related metrics and insights to help administrators make data-driven decisions about CMDB improvements."},
-  {id:33,section:"CMDB Health Dashboard",text:"The CMDB Administrator group seeks to filter specific CI classes that display on the CMDB Health Dashboard, excluding items not ready for management. Which feature achieves this?",type:"single",options:["Health Inclusion Rules","Data Refresh Rules","Identification Rules","Reconciliation Rules"],correct:[0],explanation:"Health Inclusion Rules in CI Class Manager control which CI classes are included in CMDB Health Dashboard calculations, filtering out unmanaged classes."},
-  {id:34,section:"CMDB Health Dashboard",text:"A CMDB Administrator wants to run the 'Services Have Owners Identified' playbook. Which remediation plays would be used? (Choose 2)",type:"multi",options:["Fix Data","Analyze Data","Report Data","Govern Data"],correct:[0,3],explanation:"For ownership issues in the CMDB, the playbook uses (A) Fix Data plays to directly update missing owner data and (D) Govern Data plays to implement governance controls preventing recurrence."},
-  {id:35,section:"CMDB Health Dashboard",text:"A CMDB Manager wants to improve data quality using the CMDB Health Dashboard. What needs to happen to generate CMDB health scores?",type:"single",options:["The scheduled jobs for the CMDB Health Dashboard must be activated","Nothing, CMDB health scores are calculated by default","The plugin, CMDB health calculation, needs to be installed"],correct:[0],explanation:"CMDB Health Dashboard scheduled jobs must be activated to generate health scores. These jobs run the calculations that evaluate CI data quality across the Correctness, Completeness, and Compliance KPIs."},
-  {id:36,section:"CMDB Health Dashboard",text:"A CMDB Administrator wants to start utilizing the CMDB Health Dashboard and its Key Performance Indicators. What does the Administrator do to start using the dashboard?",type:"single",options:["Activate the dashboard system property","Activate the dashboard scheduled jobs","Download the dashboard from the ServiceNow Store","Nothing, the dashboard is activated by default"],correct:[1],explanation:"To start generating CMDB Health Dashboard KPI data, the Administrator must activate the dashboard scheduled jobs. These jobs run the calculations that populate the health metrics."},
-  {id:37,section:"CMDB Health Dashboard",text:"A CMDB Administrator wants to leverage the CMDB Data Foundations Dashboard. What are benefits of using this application? (Choose 2)",type:"multi",options:["Provides playbooks to assist in remediation of potential risks","Uses automation to remediate potential risks","Has a framework to create custom metrics for the CMDB","Checks that important data is valid and properly configured"],correct:[0,3],explanation:"The CMDB Data Foundations Dashboard (A) provides playbooks for guided remediation of potential risks, and (D) checks that important CMDB data is valid and properly configured per best practices."},
-  {id:38,section:"CMDB Health Dashboard",text:"Hardware CIs are missing serial numbers. Which structured guidelines provided by ServiceNow are available to troubleshoot and resolve the issue?",type:"single",options:["CSDM Data Foundations Dashboard Playbooks","CMDB Health Dashboard Playbooks","CSDM Now Create Playbooks","CMDB Data Foundations Dashboard Playbooks"],correct:[1],explanation:"CMDB Health Dashboard Playbooks provide structured guidance specifically for resolving CI data quality issues — including missing required attributes like serial numbers on hardware CIs."},
-  {id:39,section:"CMDB Health Dashboard",text:"Configuration Management needs to ensure data quality for all CIs in the CMDB. What areas of data quality for CIs are in the CMDB Health Dashboard? (Choose 2)",type:"multi",options:["Downgraded CIs","Stale CIs","Upgraded CIs","Duplicate CIs","Missing CIs"],correct:[1,3],explanation:"The CMDB Health Dashboard tracks (B) Stale CIs (under Correctness) and (D) Duplicate CIs (under Correctness). 'Downgraded', 'Upgraded', and 'Missing' CIs are not standard CMDB Health Dashboard categories."},
-  {id:40,section:"CMDB Health Dashboard",text:"A CMDB Administrator has a report in ServiceNow that lists all CMDB Services that do not have an owner and wants to use a ServiceNow Playbook. What Governance process play can prevent this from recurring?",type:"single",options:["Set a default value on the Service Owner field so that it is never empty","Make the field Managed by mandatory on all CIs","Make the field Owned by mandatory"],correct:[2],explanation:"Making the 'Owned by' field mandatory ensures that all Service records must have an owner assigned before they can be saved. This governance control prevents the recurring issue of ownerless services."},
-  {id:41,section:"CMDB Health Dashboard",text:"A CMDB Configuration Manager is reviewing the CMDB Health Dashboard Correctness Scorecard for the Server class (60,000 servers total). Duplicate metric: Healthy CIs/Evaluated = 59,000/60,000. Orphan metric: Healthy CIs/Evaluated = 45,000/50,000. Which configuration explains the difference in scope (60,000 vs 50,000)?",type:"single",options:["The Duplicate metric has a CMDB Group configured for the Server class","The Orphan metric has a Health Inclusion rule configured for the Server class","The Orphan metric has a CMDB Group configured for the Server class","The Duplicate metric has a Health Inclusion rule configured for the Server class"],correct:[1],explanation:"The Orphan metric evaluates only 50,000 out of 60,000 servers because a Health Inclusion rule is configured for the Server class, narrowing the scope of CIs evaluated for that specific metric."},
-  {id:42,section:"CMDB Health Dashboard",text:"The CMDB Administrator group aims to display meaningful results on the CMDB Health Dashboard Compliance Scorecard for server records not on the latest patch. What must be configured?",type:"single",options:["Stale, Orphan, Duplicate","Certification Filter, Certification Template, Audit","Technical Service Offerings, Dynamic CI Groups, CMDB Groups","Certification Policies, Data Filters, Scheduled Jobs"],correct:[3],explanation:"To display Compliance Scorecard results for patching: Certification Policies (define what is being certified), Data Filters (scope which CIs), and Scheduled Jobs (run calculations regularly)."},
-  {id:43,section:"CMDB Health Dashboard",text:"A CMDB Administrator uses the CMDB Data Foundations Dashboard and notices low scores for several metrics. Which actions can the CMDB Administrator take to improve CMDB Health? (Choose 2)",type:"multi",options:["Remove non-operational and retired CIs","Adjust the metrics using exclusion rules to improve the scores","Focus on metrics with Critical and High priorities","Use the Remediation Playbooks linked beside each metric"],correct:[2,3],explanation:"To improve CMDB Health: (C) prioritize metrics marked Critical and High for maximum impact, and (D) use the Remediation Playbooks linked beside each metric for guided remediation steps."},
-  {id:44,section:"CMDB Health Dashboard",text:"A CMDB Administrator is implementing a Vulnerability Response and needs customers to have enough context to estimate risk. Which Get Well Playbook from the CSDM Data Foundations Dashboard helps?",type:"single",options:["Named Product Models without Product Owners","Locations without a Parent Location","Application Services with Business Application Relationships","Percentage of Custom Status Values for CI Life Cycle Stages"],correct:[2],explanation:"The 'Application Services with Business Application Relationships' playbook ensures Application Services are linked to Business Applications, providing the business context needed for security teams to estimate risk."},
-  {id:45,section:"CMDB Health Dashboard",text:"A Configuration Manager responsible for a specific region wants to use the CMDB Health Dashboard to improve data quality for that region only. How can the Configuration Manager get a score for regionally relevant CIs?",type:"single",options:["On the CMDB health settings, activate the option Group scores by region","Customize the CMDB Health Dashboard scheduled jobs to group results by region","Create CMDB groups with type, health, by region"],correct:[2],explanation:"Creating CMDB Groups with type='health' filtered by region allows the CMDB Health Dashboard to calculate and display health scores specifically for CIs in that region's CMDB Group."},
-  {id:46,section:"CMDB Health Dashboard",text:"A CMDB Administrator wants to improve data quality related to the CSDM. Which action should the Administrator take?",type:"single",options:["Use the CSDM Data Foundations Dashboard","Start the ServiceNow Health Scan","Use the default configured CMDB Health Dashboard"],correct:[0],explanation:"The CSDM Data Foundations Dashboard specifically provides metrics and playbooks for improving CSDM-related data quality — aligning CMDB data with CSDM best practices."},
-
-  // ─── SECTION: CI Class Manager ───
-  {id:47,section:"CI Class Manager",text:"A Configuration Manager needs to restrict the number of classes available in a Configuration Item reference field on an incident form. How does the Manager set Principal Classes?",type:"single",options:["By using the Principal Class check box on the CI Class Manager's 'Attributes' tab for a Class","By using the Principal Class attribute on the CI","By using the Principal Class check box on the CI Class Manager's 'Basic Info' tab for a Class","By using the Principal Class check box on the CMDB Workspace"],correct:[2],explanation:"Principal Classes are set using the Principal Class checkbox on the 'Basic Info' tab within CI Class Manager. This restricts which CI classes appear in CI reference fields on forms like Incident."},
-  {id:48,section:"CI Class Manager",text:"A ServiceNow Administrator needs to create multiple new CMDB classes following ServiceNow best practices. What is the starting prefix for all custom CMDB tables?",type:"single",options:["cmdb_ci","ci_cmdb","u_ci_cmdb","u_cmdb_ci"],correct:[3],explanation:"The correct prefix is 'u_cmdb_ci'. The 'u_' prefix indicates a user-created (custom) table, followed by 'cmdb_ci' following standard CMDB naming convention."},
-  {id:49,section:"CI Class Manager",text:"A CMDB Administrator is creating technical documentation including a list of attributes, IRE rules, and suggested relationships for several classes. Which central location does the CMDB Administrator use to collect this information?",type:"single",options:["CMDB Data Manager","CI Class Manager","CI Identifiers","CMDB Workspace"],correct:[1],explanation:"CI Class Manager is the central location where all CI class information is stored and managed — including attributes, identification rules, reconciliation rules, and suggested relationships."},
-  {id:50,section:"CI Class Manager",text:"A CMDB Administrator needs to define a new CI class to track a new type of equipment. Which action adds a new CI class and ensures it integrates properly with the existing CMDB structure?",type:"single",options:["Edit an existing CI class under CI Class Manager and add new fields specific to the new equipment type","Use Service Catalog to define the new CI class","Create a new CI class directly in the CI Class Manager and configure the table inheritance to ensure it inherits from a relevant parent class","Use the CI Class Manager to create a new CI class but avoid setting up any inheritance"],correct:[2],explanation:"Creating a new CI class requires using CI Class Manager and configuring table inheritance from an appropriate parent class (e.g., Hardware). This ensures the new class inherits standard CMDB attributes and behaviors."},
-  {id:51,section:"CI Class Manager",text:"A CMDB Administrator needs to identify which attributes have been created specifically for the Windows Server class. Which tab in the Attributes section is used?",type:"single",options:["Child","Added","All","Derived"],correct:[1],explanation:"The 'Added' tab shows attributes specifically added to that CI class (not inherited from parent classes), distinguishing class-specific attributes from inherited ones."},
-  {id:52,section:"CI Class Manager",text:"A new custom class is needed to reflect a new application being managed in the CMDB. Which roles are minimally needed to add this custom CI class?",type:"single",options:["data_classification_admin and personalize_dictionary","sn_cmdb_admin and personalize_dictionary","cmdb_inst_admin and personalize_form","itil_admin and personalize_form"],correct:[1],explanation:"The minimum roles to create a custom CI class are sn_cmdb_admin (CMDB administration) and personalize_dictionary (to modify the data dictionary for table creation)."},
-  {id:53,section:"CI Class Manager",text:"A Configuration Management Process Owner is preparing solution options for ingesting custom CIs to the CMDB, aligned with best practice and minimizing technical debt. Which solutions accomplish this? (Choose 2)",type:"multi",options:["Extending an existing CI class table to accommodate the custom CI class attributes","Installing or upgrading the 'CMDB CI Class Models' store application to find a suitable existing CI class","Extending an existing Asset class table to accommodate the custom CI class attributes","Repurposing a base CI class and renaming attributes as required"],correct:[0,1],explanation:"Best practices: (A) extend an existing CI class if possible, and (B) check the CMDB CI Class Models store app to find if a suitable class already exists. Asset tables and repurposing base classes introduce technical debt."},
-  {id:54,section:"CI Class Manager",text:"A CMDB Administrator wants only the CIs of Principal Classes to appear in CI reference fields on the Incident Form. Where does the CMDB Administrator designate Principal Classes?",type:"single",options:["CI Class Manager","System Properties","CMDB Data Manager","CMDB Workspace"],correct:[0],explanation:"Principal Classes are designated in CI Class Manager by checking the 'Principal Class' checkbox in the Attributes tab. This controls which CI classes appear in CI lookup fields on ITSM forms."},
-  {id:55,section:"CI Class Manager",text:"A CMDB Administrator wants to ensure that only relevant CIs from managed classes will be shown on Incident, Problem, and Change records. Which checkbox needs to be checked in CI Class Manager?",type:"single",options:["Independent","Extensible","Main Record","Principal Class"],correct:[3],explanation:"The 'Principal Class' checkbox in CI Class Manager marks a class as primary for CI reference fields. Only classes marked as Principal Class appear in CI lookup fields on ITSM forms like Incident, Problem, and Change."},
-  {id:56,section:"CI Class Manager",text:"A CMDB Administrator is working in the CI Class Manager on the Basic Info tab. How can the class be set as a Principal Class?",type:"single",options:["Check the Principal Class check box","Select 'Yes' from the Principal Class choice list","Click the Principal Class UI Action button"],correct:[0],explanation:"On the Basic Info tab of CI Class Manager, you check the 'Principal Class' checkbox to designate the class as a Principal Class for CI reference fields on ITSM forms."},
-  {id:57,section:"CI Class Manager",text:"A CMDB CI Class Owner has been asked to change the icon for the UNIX Server class. Which CI Class Manager tab can the owner use?",type:"single",options:["CI List","Basic Info","Suggested Relationships","Attributes"],correct:[1],explanation:"The icon for a CI class is changed on the Basic Info tab in CI Class Manager. This tab contains general class properties including the class name, label, icon, and hierarchy information."},
-  {id:58,section:"CI Class Manager",text:"A CMDB CI Class Owner responsible for the Windows Servers needs to manage the Windows Server class efficiently. Which CI Class Manager feature helps streamline this task?",type:"single",options:["Pinned Classes","Search CI Classes","CI Favorites"],correct:[0],explanation:"Pinned Classes in CI Class Manager allows CI Class Owners to pin their frequently managed classes to the top of the list, streamlining access without having to search each time."},
-  {id:59,section:"CI Class Manager",text:"An organization is updating the CMDB to include new asset types like IoT devices and remove outdated classes from the Principal Class filter. Which roles are needed to add or remove classes? (Choose 2)",type:"multi",options:["sn_csdm_admin","cmdb_query_builder","sn_cmdb_admin","personalize_dictionary"],correct:[2,3],explanation:"Adding or removing CI classes requires (C) sn_cmdb_admin (CMDB administration privileges) and (D) personalize_dictionary (to modify the data dictionary)."},
-  {id:60,section:"CI Class Manager",text:"A new ServiceNow customer is assembling a Configuration Management team. Which role 'Has read-only access to CMDB data and to basic user interface such as CMDB reports and dashboards'?",type:"single",options:["CI Analyst","Service or Product Owner","CMDB Process Owner","Configuration Manager/CMDB Admin"],correct:[0],explanation:"CI Analyst has read-only access to CMDB data, reports, and dashboards — the most limited role. Service/Product Owner manages portfolio, CMDB Process Owner manages CI tables, and Configuration Manager/Admin has highest privileges."},
-
-  // ─── SECTION: IRE & Identification Rules ───
-  {id:61,section:"IRE & Identification Rules",text:"The Tomcat identification rule has criterion attributes: Class and Install Directory. Which identifier entry configuration option must be checked to attempt a match using the Application identification rule if no match is found?",type:"single",options:["Applies to","Independent","Allow fallback to parent's rules","Criterion attributes"],correct:[2],explanation:"'Allow fallback to parent's rules' enables the IRE to try the parent class identification rule (Application) if the child rule (Tomcat) finds no match."},
-  {id:62,section:"IRE & Identification Rules",text:"Two new CI records are imported into the hardware class of the CMDB.<br><br><table style='width:100%;border-collapse:collapse;font-size:12px;margin:10px 0 14px'><thead><tr style='background:rgba(0,201,255,0.1)'><th style='border:1px solid #1e3a5f;padding:6px 10px;text-align:left;color:var(--accent);font-family:Space Mono,monospace'>Class</th><th style='border:1px solid #1e3a5f;padding:6px 10px;text-align:left;color:var(--accent);font-family:Space Mono,monospace'>Attributes</th><th style='border:1px solid #1e3a5f;padding:6px 10px;text-align:left;color:var(--accent);font-family:Space Mono,monospace'>Priority</th></tr></thead><tbody><tr><td style='border:1px solid #1e3a5f;padding:6px 10px;color:var(--text)'>Serial Number</td><td style='border:1px solid #1e3a5f;padding:6px 10px;color:var(--text-dim);font-family:Space Mono,monospace;font-size:11px'>serial_number, serial_number_type</td><td style='border:1px solid #1e3a5f;padding:6px 10px;color:var(--warn);font-family:Space Mono,monospace'>100</td></tr><tr style='background:rgba(255,255,255,0.02)'><td style='border:1px solid #1e3a5f;padding:6px 10px;color:var(--text)'>Hardware</td><td style='border:1px solid #1e3a5f;padding:6px 10px;color:var(--text-dim);font-family:Space Mono,monospace;font-size:11px'>serial_number</td><td style='border:1px solid #1e3a5f;padding:6px 10px;color:var(--warn);font-family:Space Mono,monospace'>200</td></tr><tr><td style='border:1px solid #1e3a5f;padding:6px 10px;color:var(--text)'>Hardware</td><td style='border:1px solid #1e3a5f;padding:6px 10px;color:var(--text-dim);font-family:Space Mono,monospace;font-size:11px'>name</td><td style='border:1px solid #1e3a5f;padding:6px 10px;color:var(--warn);font-family:Space Mono,monospace'>300</td></tr><tr style='background:rgba(255,255,255,0.02)'><td style='border:1px solid #1e3a5f;padding:6px 10px;color:var(--text)'>Network Adapter</td><td style='border:1px solid #1e3a5f;padding:6px 10px;color:var(--text-dim);font-family:Space Mono,monospace;font-size:11px'>mac_address, name</td><td style='border:1px solid #1e3a5f;padding:6px 10px;color:var(--warn);font-family:Space Mono,monospace'>400</td></tr></tbody></table><strong>CI1:</strong> The name of this CI record matches the name of an existing CI record in the CMDB.<br><strong>CI2:</strong> The IP address of this CI record matches the IP address of an existing CI record in the CMDB.<br><br>Which is correct based on the identification rule and the imported CI records?",type:"single",options:["CI1 will be updated with matching record and CI2 will be inserted as new record","CI1 and CI2 both will be updated with matching records","CI1 will be inserted as new record and CI2 will be updated with matching record","CI1 and CI2 both will be inserted as new records"],correct:[0],explanation:"The Identification and Reconciliation Engine (IRE) evaluates identification rules in priority order and uses the first rule that produces a match. For CI1, the 'name' attribute matches an existing CI and is part of a valid identification rule for the Hardware class (priority 300). Since this rule is satisfied, CI1 is considered a match and the existing record is updated. For CI2, although the IP address matches an existing CI, 'ip_address' is not part of any configured identification rule. Because no identification rule is satisfied, the IRE cannot find a match and inserts CI2 as a new record. Therefore, CI1 is updated and CI2 is inserted."},
-  {id:63,section:"IRE & Identification Rules",text:"A Configuration Management team needs to prevent duplicate server records using the IRE identification rules. Where would these rules be configured?",type:"single",options:["CMDB CI Class Manager","CMDB Workspace","CMDB Health Dashboard","CMDB Data Manager"],correct:[0],explanation:"Identification rules (used by the IRE to prevent duplicates) are configured in CMDB CI Class Manager under the Identification tab for each CI class."},
-  {id:64,section:"IRE & Identification Rules",text:"A Configuration Manager has configured multiple data sources authorized to update the same CI class. What can the Configuration Manager do to control which data source is the authoritative source of truth?",type:"single",options:["Configure data refresh rules with a specific time period","Manually run the data source updates in the correct order","Assign a priority to each data source in the reconciliation rules","Assign a run order to each data source in the identification rules"],correct:[2],explanation:"Assigning priority levels to data sources in reconciliation rules determines which source's values take precedence for CI attributes. Higher priority (lower number) sources override lower priority sources."},
-  {id:65,section:"IRE & Identification Rules",text:"A Configuration Manager is managing a CI class in the CMDB. The identification rule(s) needs an update. Where can the Configuration Manager view and configure the existing identification rule(s) for the class? (Choose 2)",type:"multi",options:["CI Class Manager","IRE Application","API Integrations","CI Identifiers module"],correct:[0,3],explanation:"Identification rules can be viewed and configured in (A) CI Class Manager (under the Identification tab) and (D) the CI Identifiers module in the Application Navigator."},
-  {id:66,section:"IRE & Identification Rules",text:"An Apache Web Server CI was discovered via Service Mapping. The app owner upgraded Apache to a different version and reran discovery. What will happen in the CMDB?",type:"single",options:["The Apache Web Server CI will be reclassified as a Web Server CI","A new Apache Web Server CI is created","The existing Apache Web Server CI will be reconciled and its version will be updated","A duplication error will occur"],correct:[2],explanation:"The IRE matches the incoming Apache Web Server record to the existing CI using identification rules. Since it's the same application with an updated version, the existing CI record is updated (reconciled) with the new version."},
-  {id:67,section:"IRE & Identification Rules",text:"An organization utilizes multiple data sources to update its CMDB, each assigned a different priority level. A high-priority data source stops updating. Which configuration allows a lower-priority source to update records after a specified period of inactivity?",type:"single",options:["Identification Rules","Data Refresh Rules","Reconciliation Rules","Health Inclusion Rules"],correct:[1],explanation:"Data Refresh Rules allow lower-priority data sources to update CI records when a higher-priority source has been inactive for a configurable period. This prevents stale data when the primary source fails."},
-  {id:68,section:"IRE & Identification Rules",text:"The following Reconciliation Rules were configured for ServiceNow, Altris, and SCCM.\n\nDiscovery Source  |  Class  |  Priority\nServiceNow  |  Windows Server [cmdb_ci_win_server]  |  100\nAltris  |  Windows Server [cmdb_ci_win_server]  |  200\nSCCM  |  Windows Server [cmdb_ci_win_server]  |  300\n\nWhich are true?",type:"multi",options:["Data collected with a discovery source of Altris can update records inserted by SCCM into the Windows Server [cmdb_ci_win_server] table","Data collected with a discovery source of ServiceNow can insert new records into the Windows Server [cmdb_ci_win_server] table, but cannot update records created by Altris or SCCM","Data collected with a discovery source of SCCM can be inserted as new records in the Windows Server [cmdb_ci_win_server] table","Data collected with a discovery source of SCCM can update any record in the Windows Server [cmdb_ci_win_server] table because it has the highest priority number"],correct:[1,2],explanation:"Lower priority number = higher authority. ServiceNow (100) is the highest priority source and can insert new records, but reconciliation rules prevent it from overwriting records owned by other sources like Altris or SCCM. SCCM (300) is the lowest priority source but can still insert new records that don't yet exist in the CMDB — it just cannot overwrite data from higher-priority sources. Option A is false: Altris cannot update SCCM-inserted records per the configured rules. Option D is false: higher priority number means lower authority, not higher."},
-  {id:69,section:"IRE & Identification Rules",text:"A CMDB Administrator needs to configure a new application identification rule that considers the potential for the same application installed more than once on the same server. Which is the best choice of a criterion attribute?",type:"single",options:["Version","Port","Class","Configuration File Path","Configuration File Name"],correct:[1],explanation:"Port is the best criterion attribute when the same application can be installed multiple times on the same server, as each instance listens on a different port."},
-  {id:70,section:"IRE & Identification Rules",text:"A CMDB Administrator needs to prevent duplicate CI creation from import sets that load data into the CMDB from vendor shipment files. How can the Administrator do this?",type:"single",options:["Set the coalesce on two mappings within the transform map","Set the system property to utilize the IRE within transform maps","Use the CMDBTransformUtil API in the transform script","Create comparison rules in the IRE"],correct:[2],explanation:"Use the CMDBTransformUtil API in Transform Maps."},
-  {id:71,section:"IRE & Identification Rules",text:"When integrating data into the CMDB using import sets and transform maps, which type of script is added to ensure the data is processed through the IRE?",type:"single",options:["onComplete","onAfter","onStart","onBefore"],correct:[3],explanation:"The 'onBefore' script in a transform map runs before the IRE processes each row, allowing you to set up IRE-related properties and ensure data flows through the IRE for proper identification and reconciliation."},
-
-  // ─── SECTION: CMDB 360 & Multisource ───
-  {id:72,section:"CMDB 360 & Multisource",text:"A CMDB Manager uses CMDB 360/Multisource CMDB to maintain and improve CMDB quality. Why would the Manager use CMDB 360/Multisource CMDB?",type:"single",options:["To populate the CMDB from multiple data sources","To ingest data from multiple data sources using Service Graph Connector(s)","To identify CI attributes from multiple data sources","To ingest data from multiple data sources using Import Set(s)"],correct:[2],explanation:"CMDB 360/Multisource CMDB is specifically used to identify and compare CI attributes across multiple discovery data sources, helping identify discrepancies and gaps for better CMDB quality."},
-  {id:73,section:"CMDB 360 & Multisource",text:"What must be true for CMDB 360/Multisource CMDB to report on and analyze CI data?",type:"single",options:["Reconciliation rules with priorities must be configured","The CI data must go through the IRE","The CI data must be from an authorized Service Graph Connector","ServiceNow Discovery must be used to populate the CI data"],correct:[1],explanation:"For CMDB 360 to track and analyze CI data from multiple sources, the data must go through the IRE (Identification and Reconciliation Engine)."},
-  {id:74,section:"CMDB 360 & Multisource",text:"A Configuration Management team has decided to start taking advantage of the CMDB 360/Multisource CMDB functionality. Which system property must be enabled?",type:"single",options:["glide.identification_engine.multisource_non_cmdb_ci_enabled","glide.identification_engine.multisource_cmdb_ci_enabled","glide.identification_engine.multisource_enabled","glide.identification_engine.multisource.query.max.limit"],correct:[2],explanation:"To enable CMDB 360/Multisource CMDB for capturing data from multiple sources per CI, the system property 'glide.identification_engine.multisource_enabled' must be enabled."},
-  {id:75,section:"CMDB 360 & Multisource",text:"A CMDB Administrator wants to leverage dynamic reconciliation rules. Which feature must be enabled?",type:"single",options:["CMDB 360/Multisource CMDB","CMDB Workspace","Reconciliation Rules","CMDB Data Manager"],correct:[0],explanation:"Dynamic Reconciliation Rules are part of CMDB 360/Multisource CMDB functionality. This feature must be enabled to create and use dynamic reconciliation rules across multiple data sources."},
-  {id:76,section:"CMDB 360 & Multisource",text:"Where can a CMDB 360/Multisource CMDB Saved Query be viewed and created in the CMDB Workspace?",type:"single",options:["Coverage window on the CMDB 360 tab","Saved queries window on the Insights tab","Saved queries window on the CMDB 360 tab","CMDB Query Builder"],correct:[2],explanation:"CMDB 360/Multisource Saved Queries are viewed and created in the 'Saved queries' window on the CMDB 360 tab within the CMDB Workspace."},
-  {id:77,section:"CMDB 360 & Multisource",text:"A CMDB Administrator needs to set up CMDB 360/Multisource CMDB. Which system property 'Enables CMDB 360'?",type:"single",options:["glide.identification_engine.multisource_enabled","glide.identification_engine.multisource_cmdb_ci_enabled","glide.cmdb.logger.source.cmdb_multisource","glide.identification_engine.multisource.recompute.max.ci.limit"],correct:[0],explanation:"'glide.identification_engine.multisource_enabled' enables CMDB 360 overall. 'multisource_cmdb_ci_enabled' enables capturing CMDB CI data from multiple sources. The logger property enables logging, and recompute.max sets limits."},
-  {id:78,section:"CMDB 360 & Multisource",text:"A CMDB Administrator needs to set up CMDB 360/Multisource CMDB. Which system property 'Enables capturing CMDB 360 data for CIs from CMDB classes'?",type:"single",options:["glide.identification_engine.multisource_enabled","glide.identification_engine.multisource_cmdb_ci_enabled","glide.cmdb.logger.source.cmdb_multisource","glide.identification_engine.multisource.recompute.max.ci.limit"],correct:[1],explanation:"'glide.identification_engine.multisource_cmdb_ci_enabled' specifically enables capturing CMDB 360 data for CIs from CMDB classes. This is distinct from the overall multisource_enabled property."},
-  {id:79,section:"CMDB 360 & Multisource",text:"The CMDB Administrator has set up Dynamic Reconciliation Rules: Server class = largest value for RAM, Windows Server class = most reported for RAM. Given data (Tivoli: 4096, ServiceNow: 4096, LANDesk: 7048, Altris: 8192), which value is added for a Server CI?",type:"single",options:["2,048 MB","4,096 MB","8,192 MB"],correct:[2],explanation:"The Server class uses 'largest value' rule. Looking at all data sources, the largest RAM value is 8,192 MB (from Altris). Therefore 8,192 MB is added for the Server CI."},
-  {id:80,section:"CMDB 360 & Multisource",text:"A Platform Data Owner wants to improve data quality with reconciliation rules but the company does not have an ITOM Discovery license required for CMDB 360. What can the Data Owner do?",type:"single",options:["The IRE reconciliation rules can use discovery sources regardless of CMDB 360 being enabled","CMDB 360/Multisource is a platform product that can be used immediately","ITOM Discovery needs to be purchased to take advantage of the multisource IRE Rules"],correct:[0],explanation:"IRE reconciliation rules work independently of CMDB 360. You can configure and use reconciliation rules with multiple data sources without needing the CMDB 360/Multisource license or ITOM Discovery."},
-  {id:81,section:"CMDB 360 & Multisource",text:"A Configuration Manager wants to explore ServiceNow CMDB 360 saved queries. What insights are gained from CMDB 360 queries? (Choose 2)",type:"multi",options:["Unique CIs created from different data sources","Different attribute values from different data sources","Duplicate configuration items from different data sources","Gaps in attribute data from different data sources","Orphan CIs created from different data sources"],correct:[1,3],explanation:"CMDB 360 queries provide (B) visibility into different attribute values reported by different data sources for the same CI, and (D) gaps where some sources don't report certain attributes."},
-  {id:82,section:"CMDB 360 & Multisource",text:"The Server [cmdb_ci_server] class uses dynamic reconciliation rule of lowest value for Disk Space (GB), while the Windows Server [cmdb_ci_win_server] class uses most reported. Given data (Tivoli: 75, ServiceNow: 75, LANDesk: 50, Altris: 80). Which value is added for a Windows Server record?",type:"single",options:["80","50","75"],correct:[2],explanation:"The Windows Server class uses 'most reported' rule for Disk Space. The value 75 appears twice (Tivoli and ServiceNow), making it the most frequently reported value. Therefore 75 GB is added to the CMDB."},
-
-  // ─── SECTION: CMDB Data Ingestion ───
-  {id:83,section:"CMDB Data Ingestion",text:"An organization needs to maintain non-discoverable attributes, such as warranty expiration dates, for hardware CIs. What method ensures these attributes are accurately maintained?",type:"single",options:["Use the CMDB Reconciliation Engine to update the attributes","Create a new CI class specifically for non-discoverable attributes","Use a scheduled data import to update the attributes from an external source"],correct:[2],explanation:"Non-discoverable attributes should be maintained through scheduled data imports from external sources such as procurement systems. The Reconciliation Engine handles discovered data, not manually maintained data."},
-  {id:84,section:"CMDB Data Ingestion",text:"A CMDB Administrator has imported data into the ServiceNow CMDB via a Service Graph Connector. The Administrator wants to review specific field to field mappings for the import. Which feature will show that information?",type:"single",options:["CMDB Integrations Dashboard","Integration Hub","IntegrationHub ETL"],correct:[2],explanation:"IntegrationHub ETL shows the specific field-to-field mappings used when importing data via a Service Graph Connector, providing visibility into how source data fields map to CMDB fields."},
-  {id:85,section:"CMDB Data Ingestion",text:"CMDB ingestion design architecture: 'Pre-built store integration solutions that require minimal customization' maps to which tool?",type:"single",options:["Agent Client Collector","Import Sets","Service Graph Connector","ServiceNow Discovery"],correct:[2],explanation:"Service Graph Connectors are pre-built, store-available solutions requiring minimal customization for integrating third-party data into CMDB."},
-  {id:86,section:"CMDB Data Ingestion",text:"CMDB ingestion design architecture: 'Automated agentless solution running patterns' maps to which tool?",type:"single",options:["Agent Client Collector","Import Sets","Service Graph Connector","ServiceNow Discovery"],correct:[3],explanation:"ServiceNow Discovery runs automated agentless solution patterns to discover devices and applications in the network. Agent Client Collector (ACC) is agent-based, not agentless."},
-  {id:87,section:"CMDB Data Ingestion",text:"A CMDB Administrator changes the query for the SCCM Service Graph Connector. What is the impact of this change?",type:"single",options:["The Data Source for the SCCM SGC will be marked as Inactive","Any Scheduled Jobs for the SCCM SGC will need to be reconfigured","Any updates for the SCCM SGC will be skipped during the upgrade"],correct:[2],explanation:"Customizing a Service Graph Connector means ServiceNow upgrades will skip those customized portions to avoid overwriting changes, requiring manual management during upgrades."},
-  {id:88,section:"CMDB Data Ingestion",text:"A CMDB Administrator has installed a Service Graph Connector and then made customizations to the mappings. What will happen on subsequent upgrades if the default definition of the script transform is updated?",type:"single",options:["The Service Graph Connector upgrade refuses to start","A skipped change is created and no change is made to the script transform definition","The upgrade stops and reports an error"],correct:[1],explanation:"When you customize a Service Graph Connector mapping, ServiceNow creates a 'skipped change' during upgrades to avoid overwriting your customizations."},
-  {id:89,section:"CMDB Data Ingestion",text:"Configuration Management requires an accurate inventory of devices in the CMDB. Which are common use cases for using Agent Client Collector (ACC)? (Choose 2)",type:"multi",options:["Devices that intermittently connect to the network","Servers in the data center","Network devices in the DMZ","Devices in secure environments"],correct:[0,3],explanation:"Agent Client Collector (ACC) is ideal for (A) devices that intermittently connect to the network (laptops, mobile devices) and (D) devices in secure environments where agentless discovery cannot reach."},
-  {id:90,section:"CMDB Data Ingestion",text:"A CMDB Administrator needs to import external data to the CMDB and wants to ensure the IRE will not be bypassed. What is the recommended method?",type:"single",options:["IntegrationHub ETL","Table API (REST API or SOAP API)","Import Sets and Transform Maps"],correct:[0],explanation:"IntegrationHub ETL is the recommended method for importing external data into the CMDB because it is natively integrated with the Identification and Reconciliation Engine (IRE). It ensures that all incoming data is processed through identification and reconciliation rules, preventing duplicates and maintaining data integrity."},
-  {id:91,section:"CMDB Data Ingestion",text:"A CMDB Administrator needs the fastest time-to-value solution for importing Windows computer data from SCCM. Which management tool accomplishes this?",type:"single",options:["Import set using JDBC data source connection to SCCM using transform maps","SCCM Usage Metering Spoke","IntegrationHub ETL connection to SCCM using Robust Transform Engine","SCCM Service Graph Connector"],correct:[3],explanation:"SCCM Service Graph Connector provides the fastest time-to-value as a pre-built, store-available solution with minimal customization needed."},
-  {id:92,section:"CMDB Data Ingestion",text:"A CMDB Administrator wants to implement Service Graph Connectors to provide integrations to many third-party solutions. Which categories of connectors are available? (Choose 2)",type:"multi",options:["Cloud","DevOps","Observability","Workflow Automation"],correct:[0,2],explanation:"Service Graph Connector categories include (A) Cloud (for cloud platform integrations like AWS, Azure, GCP) and (C) Observability (for monitoring tools like Dynatrace, Datadog)."},
-  {id:93,section:"CMDB Data Ingestion",text:"A global enterprise integrates data from multiple discovery sources (ServiceNow Discovery, SCCM, AWS, manual uploads) leading to duplicate records and inconsistencies. What actions does the CMDB team take to resolve the issue? (Choose 2)",type:"multi",options:["Create a custom script to manually adjust incoming data before storing it in the CMDB","Implement and use identification and reconciliation rules to avoid duplicates and standardize CI classification","Use CI Class Manager to establish standardized CI classes and attributes across all discovery sources","Allow each discovery source to define its own CI class, even if it results in inconsistencies"],correct:[1,2],explanation:"(B) Identification and reconciliation rules prevent duplicates by matching incoming records to existing ones. (C) CI Class Manager establishes standardized CI classes that all discovery sources map to, ensuring consistent classification."},
-  {id:94,section:"CMDB Data Ingestion",text:"A CMDB Administrator has installed a Service Graph Connector (SGC), and then made customizations to the mappings. Which is a consequence of this action?",type:"single",options:["The customization will prevent the SGC from executing without an approval record attached to the affected mapping record","The customized mappings are not supported by ServiceNow, and the customer is responsible for supporting their own customized SGC","Fields populated by a customization will have a special tag associated with them in the CMDB"],correct:[1],explanation:"When a Service Graph Connector is customized, ServiceNow no longer supports those customized mappings. The customer becomes responsible for maintaining and supporting their own customized SGC configurations."},
-  {id:95,section:"CMDB Data Ingestion",text:"A CMDB Administrator wants to leverage dynamic reconciliation rules. Which feature must be enabled? (Variant focusing on what enables dynamic reconciliation rules in multisource)",type:"single",options:["CMDB 360/Multisource CMDB","CMDB Workspace","CMDB Health Dashboard","CMDB Data Manager"],correct:[0],explanation:"Dynamic Reconciliation Rules require CMDB 360/Multisource CMDB to be enabled. This feature manages how attribute values from multiple data sources are reconciled dynamically."},
-  {id:96,section:"CMDB Data Ingestion",text:"A CMDB Data Owner has installed the Service Graph Connector Central plugin. After installing the plugin, which workspace will have the new Service Graph Connector Central tab?",type:"single",options:["CMDB Workspace","Discovery Admin Workspace","Service Graph Connector Workspace"],correct:[0],explanation:"After installing the Service Graph Connector Central plugin, a new Service Graph Connector Central tab is added within the CMDB Workspace. This provides a centralized location for managing connectors, reviewing data ingestion, and monitoring integration health."},
-
-  // ─── SECTION: Asset & CI Synchronization ───
-  {id:97,section:"Asset & CI Synchronization",text:"An Asset Manager wants to ensure that Asset records and CI records are kept synchronized automatically. How does the Manager do this? (Choose 2)",type:"multi",options:["Ensure that the business rule to update Asset fields on change on the CI table is active","Ensure that scheduled jobs are run during off-business hours to ensure that sync happens","Ensure that the business rule to update CI fields on change on the asset table is active","Ensure one-to-one physical mapping between Asset and CI"],correct:[0,2],explanation:"Synchronization between Asset and CI records in the CMDB is handled through out-of-the-box business rules that keep both records aligned when changes occur. CI → Asset sync: When a CI is updated, an active business rule ensures corresponding Asset fields are updated. Asset → CI sync: Similarly, when an Asset is updated, another business rule updates the related CI record. 👉 Both directions must be active to maintain real-time synchronization."},
-  {id:98,section:"Asset & CI Synchronization",text:"User endpoint devices populate the 'Assigned to' field on the Computer CI. The Asset team wants to auto-populate 'Assigned to' on the related Asset. What action does a Configuration Analyst take?",type:"single",options:["Hide the Assigned to field on asset and create a dot-walk field","Configure a business rule on the computer table to use a script","Use the Asset-CI Field Mapping module to create a new rule to replicate the Assigned to value"],correct:[2],explanation:"The Asset-CI Field Mapping module provides a no-code way to create rules that automatically synchronize field values between CI and Asset records. This is the recommended automated approach."},
-
-  // ─── SECTION: Duplicate CI Management ───
-  {id:99,section:"Duplicate CI Management",text:"A CMDB Administrator is asked to clean up the CMDB duplicates. What is the preferred way to manage this task?",type:"single",options:["The de-duplication task module","The de-duplication dashboard on the CMDB workspace","My Tasks in the Application Navigator"],correct:[1],explanation:"The preferred method is the De-duplication dashboard within the CMDB Workspace. It provides a centralized view of duplicate CIs and tools to resolve them efficiently."},
-  {id:100,section:"Duplicate CI Management",text:"A CMDB Administrator has similar de-duplication tasks that need to be remediated in bulk. How does the Administrator achieve this?",type:"single",options:["Create and run a de-duplication template","Configure and run a custom de-duplication background script","Create de-duplication tasks manually and remediate each","Utilize the Duplicate CI Remediator Wizard"],correct:[0],explanation:"De-duplication templates allow bulk remediation by applying the same resolution logic to multiple similar duplicate tasks simultaneously."},
-  {id:101,section:"Duplicate CI Management",text:"The CMDB Configuration Management team wants to manage de-duplication tasks generated from data ingested into the CMDB via the IRE. In which area of the CMDB Workspace can they locate these tasks?",type:"single",options:["CMDB feature adoption tile under the Insights tab","Important actions tile under the Home tab","Total status tile under the My Work tab"],correct:[1],explanation:"IRE-generated de-duplication tasks are found in the 'Important actions' tile under the Home tab of the CMDB Workspace."},
-  {id:102,section:"Duplicate CI Management",text:"A CMDB Administrator identifies duplicate CIs: one created by manual import (accurate business app relationship), one by automated discovery (latest IP address). How does the Administrator use the Duplicate CI Remediator?",type:"single",options:["Retain the discovered CI, but merge the relationship from the manually imported CI","Retain the manually imported CI, and delete the discovered CI","Retain the discovered CI, and delete the manually imported CI","Merge the two CIs automatically, retaining all attributes from the discovered CI"],correct:[0],explanation:"Best approach: Retain the discovered CI (most accurate technical data), but merge the critical business application relationship from the manually imported CI. This preserves the best data from both sources."},
-  {id:103,section:"Duplicate CI Management",text:"A CMDB Administrator is using the Duplicate CI Remediator. On the first tab of the wizard, the Main CI is selected. Which attributes are used to identify the Main CI? (Choose 2)",type:"multi",options:["Oldest Created","Most Related Items","Newest Created","Least Related Items"],correct:[0,1],explanation:"The Duplicate CI Remediator identifies the Main CI (the one to keep) by defaulting to (A) Oldest Created (the original record) and (B) Most Related Items (the record with the most connections to other CIs)."},
-
-  // ─── SECTION: CMDB Workspace ───
-  {id:104,section:"CMDB Workspace",text:"Where can an administrator perform Natural Language Queries (NLQ)?",type:"single",options:["CMDB Data Manager","CMDB Health Dashboard","CMDB Workspace","CI Class Manager"],correct:[2],explanation:"Natural Language Queries (NLQ) are performed in the CMDB Workspace, allowing administrators to query CMDB data using plain English."},
-  {id:105,section:"CMDB Workspace",text:"A CMDB Administrator wants to educate the team on actions that can be initiated from the CMDB Workspace. What actions can be initiated? (Choose 2)",type:"multi",options:["Create a CMDB Data Manager certification policy","Execute ServiceNow Discovery","Create a new CMDB class","Remediate duplicate CI records"],correct:[0,3],explanation:"From the CMDB Workspace you can create Data Manager policies (A) and remediate duplicate CI records (D). Executing Discovery and creating new CI classes are done outside the Workspace."},
-  {id:106,section:"CMDB Workspace",text:"A Configuration Manager wants to use the Unified Map. Where would it be accessed?",type:"single",options:["CI Class Manager","CMDB Workspace","CMDB Data Manager"],correct:[1],explanation:"The Unified Map is accessed through the CMDB Workspace. It provides a visual map of CI relationships and dependencies within the CMDB."},
-  {id:107,section:"CMDB Workspace",text:"A Configuration Manager working in the CMDB Workspace wants to see how CIs are connected to each other. Which tool can be used?",type:"single",options:["Relationship Map","Unified Map","Business Service Map"],correct:[1],explanation:"The Unified Map in the CMDB Workspace provides a visual representation of how CIs are connected and related to each other, showing the full topology of relationships."},
-  {id:108,section:"CMDB Workspace",text:"A Service Owner needs to view related items, such as Active Incidents and Planned Changes, directly on the home node of the Unified Map. Which work area allows this?",type:"single",options:["Map","Content controls","Tool box","Contextual side panel"],correct:[3],explanation:"The Contextual side panel in the Unified Map displays related items (like Active Incidents and Planned Changes) for the selected CI or service node."},
-  {id:109,section:"CMDB Workspace",text:"A service owner is using Unified Map to understand the composition of a service and wants to filter out irrelevant information. Which options are available from the filter panel? (Choose 2)",type:"multi",options:["Discovery source","CI type","Business criticality","Managed by group"],correct:[1,3],explanation:"The Unified Map filter panel allows filtering by (B) CI type and (D) Managed by group. These help service owners focus on relevant CI types and ownership groups within the service topology."},
-
-  // ─── SECTION: CMDB Query Builder ───
-  {id:110,section:"CMDB Query Builder",text:"Using CMDB Query Builder to find all app services with a database that has incidents and all infrastructure. Which steps does the organization take? (Choose 2)",type:"multi",options:["Use a CMDB Query to include application services and their related infrastructure","Add a non-CMDB table to the query","Use a Service Mapping Query to find all incidents related to the database","Use a Service Mapping Query to include non-CMDB tables like the Incident table"],correct:[0,1],explanation:"(A) Use a CMDB Query to include app services and related infrastructure, and (B) add a non-CMDB table (the Incident table) to include incident data in the query results."},
-  {id:111,section:"CMDB Query Builder",text:"CMDB Query Builder steps to display all operational CIs belonging to a specific application service — which steps are correct?",type:"single",options:["Add Business Application, Application Service, and CI classes to canvas; filter for app service name and operational status; configure relationships; run query","Add Application Service and CI classes to canvas; configure relationship; add Operational Status and Name as columns; run query","Add Application Service and CI classes to canvas; configure relationship; define filter for app service name and operational status of CIs; run query","Add Application Service, CI classes, Business Application to canvas; run query without filters"],correct:[2],explanation:"Correct steps: Add Application Service and CI classes to canvas → configure relationships → define filters for app service name and CI operational status → run query. Business Application is not needed for this query."},
-  {id:112,section:"CMDB Query Builder",text:"A CMDB Administrator wants to create a CMDB query to find all databases located in Seattle that are connected to application services, and include incidents related to those databases. Which actions does the company take? (Choose 2)",type:"multi",options:["Add a filter to the database node for location = Seattle","Add to the canvas the Incident table from the Non-CMDB Tables list","Set the relationship level to 'Up to 2nd level relationships'","Add property columns to the application service node"],correct:[0,1],explanation:"(A) Add a location = Seattle filter to the database CI node in the query canvas, and (B) add the Incident table from the Non-CMDB Tables list to include incident data."},
-
-  // ─── SECTION: CMDB Groups ───
-  {id:113,section:"CMDB Groups",text:"A Windows administration team wants a grouping of CIs using CMDB groups. Which methods can be used? (Choose 2)",type:"multi",options:["Encoded queries","Tag-based queries","Saved queries","Scripted queries"],correct:[0,1],explanation:"CMDB Groups can be created using (A) Encoded queries (filter-based dynamic groups) and (B) Tag-based queries. These are the two standard CMDB Group creation methods."},
-  {id:114,section:"CMDB Groups",text:"A CMDB Administrator has built Technology Management Service Offerings (TSOs) based on Dynamic CI Groups for group alignment. Which Groups are synced to CIs from the offering with a relationship to a Dynamic CI Group? (Choose 2)",type:"multi",options:["Approval Group","Support Group","Managed by Group","Owned by Group"],correct:[1,2],explanation:"When a Technical Service Offering has a relationship to a Dynamic CI Group, the Support Group and Managed by Group values from the offering are automatically synchronized to the member CIs."},
-  {id:115,section:"CMDB Groups",text:"The Change Management team wants to implement a Change across multiple CIs at the same time. Which field on the Change Request form needs to be populated with a dynamic CI group?",type:"single",options:["Business Service","Configuration Item","Service Offering"],correct:[1],explanation:"The Configuration Item field on the Change Request form is populated with a dynamic CI group to apply a change across multiple related CIs simultaneously."},
-  {id:116,section:"CMDB Groups",text:"An IT group has a requirement to upgrade all the Windows servers. There is a Dynamic CI Group containing all the Windows servers. What happens to the Dynamic CI Group when it is referenced from the Configuration Item field on a Change form?",type:"single",options:["It displays all related CIs in the Impacted Services related list","It displays all related CIs in the Affected CIs related list","It calculates impact against the Dynamic CI Group"],correct:[1],explanation:"When a Dynamic CI Group is referenced in the CI field on a Change form, it expands to display all related CIs in the Affected CIs related list."},
-  {id:117,section:"CMDB Groups",text:"A CMDB Administrator notices that CIs do not have a support group. How can the support group be automatically populated and maintained on the CI record?",type:"single",options:["CI Class Manager","Technology Management Service Offering (Technical Service Offering)","Technology Management Service (Technical Service)","Dynamic CI group"],correct:[1],explanation:"Technology Management Service Offerings (TSOs) automatically populate and maintain the Support Group on CIs that are members of related Dynamic CI Groups."},
-
-  // ─── SECTION: CMDB Relationships ───
-  {id:118,section:"CMDB Relationships",text:"What is the relationship between an application and a server?",type:"single",options:["Application > Used by::Uses > Server","Application > Runs::Runs On > Server","Application > Uses::Used by > Server","Application > Runs on::Runs > Server"],correct:[3],explanation:"The correct CMDB relationship notation is: Application > Runs on::Runs > Server. 'Runs on' is the parent relationship and 'Runs' is the reverse."},
-  {id:119,section:"CMDB Relationships",text:"A Data Center Manager is defining the relationship between Application Servers and the Applications they host. The company has multiple Application Servers that host one or more Applications. Which describes the relationship between the Application Server table and the Application table?",type:"single",options:["One-to-one","Many-to-one","Many-to-many","One-to-many"],correct:[2],explanation:"Multiple Application Servers can host multiple Applications, and a single Application can run on multiple servers — making this a many-to-many relationship between the tables."},
-
-  // ─── SECTION: CMDB Business Value ───
-  {id:120,section:"CMDB Business Value",text:"What is the value of using the CMDB in security operations? (Choose 2)",type:"multi",options:["Auto-resolves a vulnerability","Enables audits and attestations across CIs","Identifies the IT infrastructure with a vulnerability","Allows security team to assess and remediate an incident"],correct:[2,3],explanation:"The CMDB supports security operations by (C) identifying affected IT infrastructure when a vulnerability is discovered, and (D) enabling the security team to understand scope and remediate incidents."},
-  {id:121,section:"CMDB Business Value",text:"ServiceNow Event Management significantly benefits from a well-maintained CMDB. What are key advantages? (Choose 2)",type:"multi",options:["Correlation of alerts to knowledge base articles","Mapped services provide visibility to the business impact of an alert","Binding of alerts to specific CIs","Mapped services provide visibility to users consuming the service"],correct:[1,2],explanation:"A well-populated CMDB gives Event Management (B) business impact visibility through service maps, and (C) the ability to bind alerts to specific CIs."},
-  {id:122,section:"CMDB Business Value",text:"A healthy and trusted CMDB with Service Mapping enhances the change management process. Which improvements result? (Choose 2)",type:"multi",options:["Enables auto population of the assignment group field to dynamically route changes","Ensures that no changes result in service downtime","Provides insight into the potential impact of the change","Automatically schedules and deploys changes without human review"],correct:[0,2],explanation:"A trusted CMDB enhances Change Management by (A) auto-populating assignment groups to route changes correctly, and (C) providing impact analysis through service mappings."},
-  {id:123,section:"CMDB Business Value",text:"Which are business values of CMDB? (Choose 2)",type:"multi",options:["Streamlining incident and change management","Automating maintenance for CI relationships","Collecting and managing financial data","Strengthening operational resiliency"],correct:[0,3],explanation:"Key business values of CMDB are (A) streamlining incident and change management through better CI data, and (D) strengthening operational resiliency by understanding infrastructure dependencies."},
-  {id:124,section:"CMDB Business Value",text:"How do CMDB management tools within the CMDB governance pillar help organizations? (Choose 2)",type:"multi",options:["Gain visibility and control","Reduced hardware costs","Enhanced Service Management operations","Assist integration choices"],correct:[0,2],explanation:"CMDB governance tools help organizations (A) gain visibility and control over their CI landscape, and (C) enhance Service Management operations through better data quality."},
-  {id:125,section:"CMDB Business Value",text:"How is the CMDB aligned to business processes? (Choose 2)",type:"multi",options:["Provides a centralized view of configuration items and their relationships","Enables the CFO/CIO to track software licenses","Extends service delivery management to all enterprise departments","Enhances decision making and operational efficiency across the organization"],correct:[0,3],explanation:"The CMDB aligns to business processes by (A) providing a centralized view of CIs and their relationships, and (D) enhancing decision making and operational efficiency."},
-  {id:126,section:"CMDB Business Value",text:"A Change Manager wants to gain value from CSDM. How will the Change Management process benefit from CSDM? (Choose 2)",type:"multi",options:["Determine the root cause of the change issue","Identify blackout windows for the change","Understand the impact of the change on services","Route the change dynamically"],correct:[1,2],explanation:"CSDM benefits Change Management by (B) identifying blackout windows through service ownership and (C) understanding business and technical impact of changes through service mapping."},
-
-  // ─── SECTION: CSDM Domains ───
-  {id:127,section:"CSDM Domains",text:"A hospital has received a new CT Scanner. The inventory management team has created a catalog item doctors can use to schedule patients for scans. What CSDM domain should the inventory management team map the catalog item to?",type:"single",options:["Service Consumption (Sell/Consume)","Design and Planning (Design)","Foundation","Build and Integration (Build)","Service Delivery (Manage Technical Service)"],correct:[0],explanation:"Service Consumption (Sell/Consume) is the CSDM domain for presenting and consuming services — including catalog items offered to end users. This aligns with the Business Relationship Manager perspective of offering services to consumers."},
-  {id:128,section:"CSDM Domains",text:"A Business Relationship Manager wants to implement Service Portfolio Management (SPM) and present offerings to business consumers. Which CSDM Domain does this align with?",type:"single",options:["Service Delivery","Service Consumption (Sell/Consume)","Design and Planning (Design)","Build and Integration (Build)"],correct:[1],explanation:"Service Consumption (Sell/Consume) aligns with presenting service offerings to business consumers and managing the service portfolio from the BRM perspective."},
-  {id:129,section:"CSDM Domains",text:"Which CSDM domain provides: 'Understand CIs related to business application and related capabilities to identify redundancies, monitor costs, and make better investment decisions around roadmap'?",type:"single",options:["Foundation","Design and Planning","Service Consumption","Service Delivery"],correct:[1],explanation:"Design and Planning (Design) domain focuses on understanding applications, capabilities, costs, and investment decisions — key activities for Enterprise Architects and Application Portfolio Management."},
-  {id:130,section:"CSDM Domains",text:"A CMDB Architect intends to build the CSDM sell/consume domain. Which CMDB tables will the architect use?",type:"single",options:["Business Capability, Information Object, Business Application","Business Service Offering, Business Service","Application Service, Technology Management Service (Technical Service), Technology Management Offering (Technical Service Offering)"],correct:[1],explanation:"The CSDM Sell/Consume domain uses Business Service Offering and Business Service tables. Application Services and Technical Services belong to the Service Delivery domain."},
-  {id:131,section:"CSDM Domains",text:"A CMDB Administrator adds CSDM design and planning domain components into the CMDB. Who is involved in this exercise? (Choose 2)",type:"multi",options:["Application Owner","Enterprise Architect","Business Relationship Manager","Application Service Owner"],correct:[0,1],explanation:"Adding design and planning domain components involves (A) Application Owners (who own Business Applications) and (B) Enterprise Architects (who design the application portfolio and capabilities)."},
-  {id:132,section:"CSDM Domains",text:"The Incident Process Owner asks which classes of CSDM are used on the Incident form. Which classes are appropriate? (Choose 2)",type:"multi",options:["Business Application","Service Offering","Service Portfolio","Application Service"],correct:[1,3],explanation:"The Incident form uses Service Offering (the consumed service) and Application Service (the technical application service) from CSDM."},
-  {id:133,section:"CSDM Domains",text:"The Application Portfolio Management team is asking for help modeling platforms as Business Applications in CSDM. ServiceNow Platform = Platform Host, Incident and Change = Platform Applications. How is this mapped?",type:"single",options:["ServiceNow Platform = Architecture type Platform Host; Incident and Change = Platform Applications with reference to ServiceNow Platform","ServiceNow Platform, Incident, and Change all web-based Architecture type","ServiceNow Platform = Platform Host; Incident and Change = Platform Applications; Depends On relationship created","All web-based; Depends On relationship created"],correct:[0],explanation:"ServiceNow Platform is modeled as Architecture type 'Platform Host', and Incident/Change are 'Platform Applications' with a reference to the Platform Host. No explicit Depends On relationship is needed."},
-  {id:134,section:"CSDM Domains",text:"An Enterprise Architect of a financial services company is working across the enterprise and wants to track their capabilities. Which CSDM 5 domain is used?",type:"single",options:["Foundation","Service Delivery (Manage Technical)","Design and Planning (Design)","Build and Integration (Build)","Service Consumption (Sell/Consume)"],correct:[2],explanation:"Design and Planning (Design) domain is used to track enterprise capabilities, business applications, and their relationships — key activities for an Enterprise Architect."},
-  {id:135,section:"CSDM Domains",text:"A Platform Owner is mapping production line monitoring systems to the CSDM 5 framework. Which CSDM 5 domain does the Platform Owner use?",type:"single",options:["Service Consumption (Sell/Consume)","Design and Planning (Design)","Foundation","Build and Integration (Build)"],correct:[2],explanation:"Foundation domain covers infrastructure and physical/hardware CIs — including production line monitoring systems. Foundation is the base layer of CSDM covering the 'base system tables'."},
-  {id:136,section:"CSDM Domains",text:"Given a list of Service types, drag the appropriate service to its definition: 'Published to Service Owners and underpins one or more business or application services'",type:"single",options:["Application Service","Technology Management Service (Technical Service)","Business Service"],correct:[1],explanation:"Technology Management Service (Technical Service) is published to Service Owners and underpins business or application services. Application Service is a logical representation of a deployed system, and Business Service is published to Business Users."},
-  {id:137,section:"CSDM Domains",text:"A CMDB Owner starts on the CSDM journey. 'Business Application' belongs to which CSDM domain?",type:"single",options:["Design and Planning domain","Foundation domain","Service Delivery domain","Sell/Consume domain"],correct:[0],explanation:"Business Application belongs to the Design and Planning domain. Foundation covers infrastructure/hardware CIs, Service Delivery covers Technical Services, and Sell/Consume covers Business Services presented to consumers."},
-  {id:138,section:"CSDM Domains",text:"A development team is deploying an application to many servers with PII and PCI compliance requirements. Where in the CSDM does the team store information to satisfy audits?",type:"single",options:["Customer Service Offerings and Databases","Technology Management Service Offerings (Technical Service Offerings) and Dynamic CI Groups","Business Applications and Information Objects"],correct:[2],explanation:"Business Applications model the application being deployed, and Information Objects model the types of data it handles (PII, PCI). Together they provide the CSDM structure to satisfy compliance audits."},
-  {id:139,section:"CSDM Domains",text:"In a company, which use case requires Information Objects?",type:"single",options:["The SecOps team wants to understand the operational risk in the Business Application context","The Event Operations team wants to automate their events into incident for operational actions","The Asset Management team wants to understand the asset life cycle compliancy in a Business Application context","The Business Service Management team wants to understand the operational impact for their consumer parties","The Customer Service team wants to onboard pro-active case management"],correct:[0],explanation:"Information Objects model data types (like risk data, PII) associated with Business Applications. SecOps needing to understand operational risk in the Business Application context requires Information Objects to model that risk data relationship."},
-  {id:140,section:"CSDM Domains",text:"A retail organization needs to ensure that incidents affecting customer-facing services are resolved quickly to reduce revenue loss. Which CSDM attribute is used to prioritize these services?",type:"single",options:["Service classification in the Technical Service","Assignment Group on the CI record","Business Criticality in the Service Offering","Affected CIs in the Incident record"],correct:[2],explanation:"Business Criticality in the Service Offering (part of CSDM) is used to prioritize customer-facing services. This attribute feeds into incident prioritization."},
-  {id:141,section:"CSDM Domains",text:"A company wants to track regulatory compliance. What is the purpose of an Information Object in the CSDM framework?",type:"single",options:["It describes data exchanged between an API interface and an Application","It describes data in general on a group of Configuration Items","It describes the logical data to the Business Applications"],correct:[2],explanation:"An Information Object describes the logical data (like PII, financial data, regulated data) associated with Business Applications. It models data assets and their relationship to the applications that process them."},
-  {id:142,section:"CSDM Domains",text:"A CMDB Administrator is leveraging CI data as part of Integrated Risk Management. Which CSDM relationships are leveraged using the CSDM playbooks under the Run tab? (Choose 2)",type:"multi",options:["Business Applications that have their relationships to Information Objects","Logical CIs that have relationships with Information Objects","Locations that have established parent records","Business Applications that have relationships to Application Services"],correct:[0,1],explanation:"The Run tab playbooks focus on (A) Business Applications linked to Information Objects (for data governance and risk) and (B) Logical CIs with Information Object relationships (for data classification and compliance tracking)."},
-
-  // ─── SECTION: CSDM Life Cycle ───
-  {id:143,section:"CSDM Life Cycle",text:"A Configuration Management Governance team is transitioning from legacy CMDB status fields to CSDM life cycle status fields. Which table can be modified?",type:"single",options:["Life Cycle Stages [life_cycle_stage]","Life Cycle Stage Status [life_cycle_stage_status]","Life Cycle Mapping [life_cycle_mapping]","Life Cycle Controls [life_cycle_control]"],correct:[2],explanation:"The Life Cycle Mapping [life_cycle_mapping] table is pre-populated with mappings for legacy status values to CSDM life cycle values and can be modified to customize these mappings."},
-  {id:144,section:"CSDM Life Cycle",text:"A CMDB Administrator aims to utilize CSDM life cycle field mappings. What is the next step after selecting the Enable Life Cycle Sync button?",type:"single",options:["Activate the CSDM Life Cycle field mappings","Resolve any incomplete field mappings identified in the Discrepancy Report","Fix the incorrect values in the Life Cycle stage status table"],correct:[1],explanation:"After enabling Life Cycle Sync, the next step is to resolve incomplete field mappings shown in the Discrepancy Report, ensuring legacy CMDB status values are correctly mapped to CSDM life cycle values."},
-  {id:145,section:"CSDM Life Cycle",text:"Some steps need to be taken to transition from different status attributes in the CMDB to life cycle objects. Which table 'uses the type of CI (hardware, document, logical, etc.) to determine which sub-level life cycle state values are available'?",type:"single",options:["life_cycle_mapping","life_cycle_stage","life_cycle_stage_status","life_cycle_object"],correct:[3],explanation:"The life_cycle_object table uses the CI type (hardware, document, logical, etc.) to determine which sub-level life cycle state values are available for that type of CI."},
-  {id:146,section:"CSDM Life Cycle",text:"A Configuration Manager is reviewing the life cycle of CIs. The manager reviews the legacy status values and their equivalent CSDM life cycle stage and life cycle stage status values. Where are these reviewed?",type:"single",options:["Life cycle choice list","Life cycle properties","Life cycle mappings"],correct:[2],explanation:"Legacy CMDB status values and their CSDM equivalents are reviewed in the Life Cycle Mappings (life_cycle_mapping table)."},
-
-  // ─── SECTION: CSDM Maturity ───
-  {id:147,section:"CSDM Maturity",text:"A CSDM Data Manager needs metrics on alignment of product models, locations, and business units with best practices. Which CSDM Data Foundations Dashboard tab provides this?",type:"single",options:["Walk","Crawl","Fly","Run","Foundation"],correct:[1],explanation:"The Crawl tab provides metrics on alignment of product models, locations, and business units with best practices — representing the foundational maturity level."},
-  {id:148,section:"CSDM Maturity",text:"A Service Portfolio Manager wants to know what Application Services their Business Service Offerings depend on. What CSDM stage maps this relationship?",type:"single",options:["Walk","Crawl","Run","Foundation","Fly"],correct:[2],explanation:"The Run stage maps relationships between Business Service Offerings and Application Services — representing a mature CSDM implementation with full service dependency mapping."},
-  {id:149,section:"CSDM Maturity",text:"A customer's CMDB is aligned to the CSDM Walk stage. What benefit is provided by the CMDB?",type:"single",options:["Enables impact assessments for incident, problem, and change on Business Services","Improves the implementation velocity of APM Foundation for future business application rationalization","Allows for additional stratification of Technical team's support structure along the lines of OLAs and commitments"],correct:[0],explanation:"At the CSDM Walk stage, the CMDB enables impact assessments for incident, problem, and change management on Business Services — providing business-level visibility into technical change impacts."},
-  {id:150,section:"CSDM Maturity",text:"The ITSM Manager wants to use Technology Management Offerings (Technical Service Offerings) to populate the support group of associated CIs. What CSDM stage would this be completed in?",type:"single",options:["Foundation","Fly","Walk","Crawl","Run"],correct:[2],explanation:"Using TSOs to populate Support Groups on CIs is a Walk stage activity. Walk involves establishing Technical Service management, including group ownership propagation through TSOs."},
-  {id:151,section:"CSDM Maturity",text:"The prescribed CSDM rollout order is?",type:"single",options:["Initiate, Plan, Execute, Deliver, Close","Architecture, Business, Technical, Governance","Foundation, Crawl, Walk, Run, Fly","Initial, Developing, Defined, Managed"],correct:[2],explanation:"The prescribed CSDM rollout order is: Foundation, Crawl, Walk, Run, Fly. Each stage builds on the previous, with Foundation establishing base tables and Fly representing the most mature implementation."},
-  {id:152,section:"CSDM Maturity",text:"A CSDM Data Manager needs metrics on the alignment of Technology Management Services and Technology Management Offerings with best practices. Which CSDM Data Foundation Dashboard tab provides this?",type:"single",options:["Run","Fly","Walk","Crawl"],correct:[2],explanation:"The Walk tab in the CSDM Data Foundation Dashboard provides metrics on Technical Services and Technical Service Offerings alignment with best practices."},
-  {id:153,section:"CSDM Maturity",text:"A Configuration Manager is implementing end-to-end service modeling and wants to get help on status and playbooks for improving the quality. What does the Configuration Manager reference?",type:"single",options:["CSDM Data Foundation Dashboard","CMDB Workspace","Service Mapping Data Foundation Dashboard","CMDB Data Foundation Dashboard"],correct:[0],explanation:"The CSDM Data Foundation Dashboard provides status metrics and playbooks specifically for improving CSDM service modeling quality and alignment with best practices."},
-  {id:154,section:"CSDM Maturity",text:"A Platform Owner is building the governance team to support the CSDM. Which domain has 'Enterprise Architect(s), Data Steward(s), Process Owner(s), Platform Owner' as its governance roles?",type:"single",options:["Design Domain","Technical Domain","Portfolio Domain","Foundation Domain"],correct:[3],explanation:"The Foundation Domain governance team includes Enterprise Architects, Data Stewards, Process Owners, and the Platform Owner — responsible for maintaining the foundational infrastructure data layer."},
-  {id:155,section:"CSDM Maturity",text:"According to CSDM, a server team is requesting a catalog item be created for infrastructure upgrade requests. Which role is involved in initiating the request and defining requirements?",type:"single",options:["Enterprise Architect","Application Service Owners","Technology Service Owners"],correct:[2],explanation:"Technology Service Owners (owners of Technical Service Offerings) are responsible for defining infrastructure service catalog items and initiating requests for their technical services."},
-
-  // ─── SECTION: Application Services ───
-  {id:156,section:"Application Services",text:"Which application service type is 'Best fit to map cloud-native, container-based, or virtual machine environments'?",type:"single",options:["Service Mapping (Top-down)","Tag-Based","Service Mapping (Connection Suggestion)","Dynamic CI Group"],correct:[1],explanation:"Tag-Based is best for cloud-native, container-based, or virtual machine environments where CIs can be tagged and grouped dynamically."},
-  {id:157,section:"Application Services",text:"Which application service type is 'Ideal for small application services that can be easily grouped using filters and CMDB queries'?",type:"single",options:["Service Mapping (Top-down)","Tag-Based","Service Mapping (Connection Suggestion)","Dynamic CI Group"],correct:[3],explanation:"Dynamic CI Group is ideal for small application services that can be easily grouped using CMDB filters and queries."},
-  {id:158,section:"Application Services",text:"Which ServiceNow solutions automatically create relationships between CI Applications that are part of an Application Service? (Choose 2)",type:"multi",options:["IntegrationHub ETL","Service Mapping","Discovery","Data Manager","Event Management"],correct:[1,2],explanation:"(B) Service Mapping discovers and maps application service relationships through pattern-based methods, and (C) Discovery automatically identifies application-to-server relationships during the discovery process."},
-  {id:159,section:"Application Services",text:"An organization is changing data centers and needs to know the consequences of planned changes. How can Application Service mapping be used as part of Change Management?",type:"single",options:["To understand the physical location of CIs","To identify which devices will go offline first","To understand the business impact of CIs"],correct:[2],explanation:"Application Service mapping shows how CIs relate to business services, enabling Change Management teams to understand the business impact of planned infrastructure changes."},
-
-  // ─── SECTION: CMDB Data Ingestion (Drag & Drop / Products) ───
-  {id:160,section:"CMDB Data Ingestion",text:"Drag and drop the product to its description: 'Automatically identifies devices and applications in the network, populating the CMDB with accurate and up-to-date information'",type:"single",options:["ServiceNow Discovery","Service Graph Connectors","Agent Client Collector (ACC)","Service Mapping"],correct:[0],explanation:"ServiceNow Discovery automatically identifies devices and applications in the network, populating the CMDB. Service Mapping shows service topology, ACC is agent-based for specific environments, and SGC provides pre-built integrations."},
-  {id:161,section:"CMDB Data Ingestion",text:"Drag and drop the product to its description: 'Facilitates integration between ServiceNow and external systems to import and synchronize data'",type:"single",options:["ServiceNow Discovery","Service Graph Connectors","Agent Client Collector (ACC)","Service Mapping"],correct:[1],explanation:"Service Graph Connectors facilitate integration between ServiceNow and external systems to import and synchronize data into the CMDB from third-party tools."},
-  {id:162,section:"CMDB Data Ingestion",text:"A manufacturing organization has implemented Incident Management and wants to integrate additional products. Which product 'Delivers asset actions and events for the management and maintenance of assets during incidents'?",type:"single",options:["Hardware Asset Management","Risk Management","Discovery","Service Portfolio Management"],correct:[0],explanation:"Hardware Asset Management delivers asset actions and events for managing assets during incidents — enabling asset-aware incident handling."},
-  {id:163,section:"CMDB Data Ingestion",text:"What are the characteristics or functions of ServiceNow IntegrationHub ETL? (Choose 2)",type:"multi",options:["Uses the IRE to process and integrate data","Integrates third-party data into the CMDB or into non-CMDB tables","Performs discovery data collection and updates the CMDB","Imports Microsoft SCCM/Intune data into the CMDB"],correct:[0,1],explanation:"IntegrationHub ETL (A) uses the IRE to process and properly integrate imported data, ensuring deduplication and reconciliation, and (B) can integrate third-party data into both CMDB tables and non-CMDB tables."},
-  {id:164,section:"CMDB Data Ingestion",text:"Where to obtain the CMDB and CSDM Data Foundations Dashboard?",type:"single",options:["It is a paid application on the ServiceNow Store","It is a free application on the ServiceNow Innovation Lab","It is active by default","It is a free application on the ServiceNow Store"],correct:[3],explanation:"Both the CMDB Data Foundation Dashboard and CSDM Data Foundation Dashboard are free applications available on the ServiceNow Store. They are not active by default and need to be installed."},
-  {id:165,section:"Matching: Application Services",text:"Match each application service type to its best description.",type:"match",
+{
+  id:1,
+  section:"Pega",
+  text: "Select each Process Step Description on the left and drap it to the appropriate Process Step on the right.",
+  type: "match",
   pairs:[
-    {left:"Service Mapping (Top-down)",right:"Recommended for mission-critical application services that require a precise approach using patterns"},
-    {left:"Tag-Based",right:"Best fit to map cloud-native, container-based, or virtual machine environments"},
-    {left:"Service Mapping (Connection Suggestion)",right:"Ideal for custom-built applications and leverages application fingerprinting to generate service maps in a timely manner"},
-    {left:"Dynamic CI Group",right:"Ideal for small application services that can be easily grouped using filters and CMDB queries"}
+    {left:"Total customer inquiry cases per state per product line",right:"Business Report"},
+    {left:"Top 10 merchants with highest percentage of fraud cases",right:"Business Report"},
+    {left:"The number of customer support request cases created per week",right:"Process Report"},
+    {left:"Average duration and timeliness per assignment",right:"Process Report"},
   ],
-  explanation:"Service Mapping Top-down uses discovery patterns for precision on mission-critical apps. Tag-Based suits dynamic cloud/container environments. Connection Suggestion uses fingerprinting for custom apps. Dynamic CI Group is simplest — filter-based grouping for small services."},
-  {id:166,section:"Matching: Duplicate CI Management",text:"A CMDB Administrator seeks to understand the available tools for preventing, addressing, and remediating duplicate CIs. Match each feature with its corresponding outcome. (Some options may not apply)",type:"match",
+},
+{
+  id:2,
+  section:"Pega",
+  text:"A manager requests a report that contains the following columns: Create Date, Case ID, Create Operator, and Work Status.\nYou must sort the cases so the case with the most recent create date appears at the top of the list and descends in order.\nHow do you design the report definition to support this requirement?",
+  type:"single",
+  options:["Select Lowest to Highest sort type for Create Date","Select Highest to Lowest sort type for Create Date","Add a filter condition where Create Date is greater than the current date","Make the Create Date the first column in the report"],
+  correct:[1],
+  explanation:"To show the most recent create date first, set the Create Date sort type to Highest to Lowest.",
+},
+{
+  id:3,
+  section:"Pega",
+  text:"A purchase request list report includes columns for case ID and regional cost center.A manager wants the report to show the total number of purchase of the regional cost centers.How do you configure the report definition?",
+  type:"single",
+  options:["Create a filter for each cost center and count the Case IDs","Summarize the Case ID column by count","Define a function for the cost center column to total the Case IDs","Summarize the regional cost centers by count"],
+  correct:[1],
+  explanation:"To show the total number of purchase requests, summarize the Case ID column by count.",
+},
+{
+  id:4,
+  section:"Pega",
+  text:"To reduce scrolling on a view, you want to organize existing content so that detail display when an option is selected in a drop-down menu.\nThere is no drop-down menu currently on the view.\nWhich two configuration archive the business requirement? (Choose Two)",
+  type:"multi",
+  options:["Configure a layout to separate each option into individual panel and set the layout format to menu format","Configure a disable condition (when rule) on each field to allow access when the associated option is selected on the drop-down","Configure a data relationship to select the option using the Drop-down list record selection","Configure a repeating dynamic layout with an embedded section for each option and set the layout format to grouped"],
+  correct:[0,3],
+  explanation:"Use a menu-format layout with individual panels and a grouped repeating dynamic layout with embedded sections to show details when options are selected.",
+},
+{
+  id:5,
+  section:"Pega",
+  text:"Which two statements are true about insights? (Choose Two)",
+  type:"multi",
+  options:["Visibility is always shared for insights charts","You can edit application data directly in an insight","You can use only preconfigured fields in an insight","Insight transform data queries into sharable visualizations"],
+  correct:[2,3],
+  explanation:"Insights use preconfigured fields and transform data queries into sharable visualizations. They do not always share visibility, and they do not allow direct editing of application data.",
+},
+{
+  id:6,
+  section:"Pega",
+  text:"Select each security policy on the left and drag it to the appropriate use case on the right.",
+  type:"match",
   pairs:[
-    {left:"Certification Tasks",right:"Can be assigned to groups for resolving duplicate CIs"},
-    {left:"De-Duplication Templates",right:"Offers insight into duplicate CIs within the CMDB"},
-    {left:"De-Duplication Tasks",right:"Offers a solution to resolve de-duplication tasks in bulk"},
-    {left:"Duplicate CI Remediator",right:"Provides a wizard to resolve de-duplication tasks individually"}
+    {left:"A user is required to verify their identity with a one-time password sent by SMS text message.",right:"Multi-factor authentication policies"},
+    {left:"Stop or slow a brute-force attack by enforcing a waiting period after three failed attempts.",right:"Lockout policies"},
+    {left:"Stop or slow a brute-force attack by enforcing a challenge-response test upon authentication failure.",right:"CAPTCHA policies"}
   ],
-  explanation:"Certification Tasks are assignable to groups for governance. De-Duplication Templates give visibility/insight into duplicates. De-Duplication Tasks handle bulk resolution. Duplicate CI Remediator is a step-by-step wizard for individual task resolution."},
+},
+{
+  id:7,
+  section:"Pega",
+  text:"Which two configurations, when used together, allow you to track updates to field values in your application? (Choose Two)",
+  type:"multi",
+  options:["Select the field that you want to track","Enable field auditing on the Case type landing page","Add the Administrator role to the case type","Enable field-level auditing on the view that contains the field that you want to track"],
+  correct:[0,1],
+  explanation:"Track field updates by enabling field auditing on the case type landing page and enabling field-level auditing on the view containing the field.",
+},
+{
+  id:8,
+  section:"Pega",
+  text:"Based on security factors, which two options are considered strong passwords? (Choose Two)",
+  type:"multi",
+  options:["1Lik3Chocolate$trawDust!crea@m","bluedoor","Pe64$yst3m$","dbfrbfg;ebgkerbgkrdb"],
+  correct:[0,3],
+  explanation:"Strong passwords use mixed case, numbers, and special characters, such as options A and C.",
+},
+{
+  id:9,
+  section:"Pega",
+  text:"An internal aplication currently grants 75 employees access to one of four roles: Admin, Author, User, and Manager. \nA new analyst that joins the company requires all the Author role access but only some of the reporting capiabilities available to the manager role.\nHow do you you satisfy this security requirement?",
+  type:"single",
+  options:["Update the Author role to include the required analyst reports","Add the analyst to the Manager role","Add the analyst to both the Author role and the Case Manager channel interface","Create a new Analyst role with the required access"],
+  correct:[3],
+  explanation:"Create a new Analyst role with the required access so the analyst gets Author privileges plus only the needed reporting capabilities without granting full Manager access.",
+},
+{
+  id:10,
+  section:"Pega",
+  text:"Which three options can you configure for a mobile app channel? (Choose Three)",
+  type:"multi",
+  options:["Change the host for a mobile app to a production system, rather than a development system.","Define UI behavior for a view when displayed on a mobile device","Establish security for a mobile app, such as the use of biometric identifier","Identify how different mobile devices render UI controls.","Define the role applied to users when they run the mobile app"],
+  correct:[0,2,4],
+  explanation:"Mobile app channels can configure mobile-specific UI behavior, security settings, and the role applied to app users.",
+},
+{
+  id:11,
+  section:"Pega",
+  text:"ABC BankCorp operates two subsidiaries, GlobalBank and LocalBank, with different brandings. ABC BankCorp wants to create a mobile app experience for both users and customer service representatives (CSRs) for its Transaction Dispute application. Of the following requirements, which two options affect the number of mobile app channels that you need to configure? (Choose Two)",
+  type:"multi",
+  options:["Customer can create only dispute cases, while CSRs can also create fraud report cases.","The app customizes currency units and date/time format according to the user's locale","Mobile apps must support both phones and tablets","Mobile app color palette is customized for each subsidiary"],
+  correct:[0,3],
+  explanation:"Different user capabilities and branding requirements can each require a separate mobile app channel.",
+},
+{
+  id:12,
+  section:"Pega",
+  text:"Which two use cases are supported by configuring a mobile channel in App Studio? (Choose Two)",
+  type:"multi",
+  options:["Grant access to the application for a specific user","Set the width of an application icon to 180x180 pixels","Configure a left swipe behavior to open a message","Lock the application after 20 minutes of inactivity"],
+  correct:[2,3],
+  explanation:"Mobile channels support behaviors like swipe gestures and application inactivity locking.",
+},
+{
+  id:13,
+  section:"Pega",
+  text:"A case type for voiceover requests includes two tasks: Edit Script and Record Script. Your team has been asked to route Edit Script tasks to editors and Record Script tasks to actors. Which approach fulfills this requirement?",
+  type:"single",
+  options:["Create one work group for both personas and route to the work group","Create one new work queue and split the tasks by type","Create two new work queues, one for editor and one for actors.","Create two new work groups in Dev Studio that reference one work queue."],
+  correct:[2],
+  explanation:"Create two new work queues—one for editors and one for actors—so each task type routes to the appropriate persona.",
+},
+{
+  id:14,
+  section:"Pega",
+  text:"A survey is sent to a customer via email. How do you configure a solution to ensure the email includes the case ID for the survey?",
+  type:"single",
+  options:["Create a process using the Send Email step allowing representatives to quickly add the case ID to the email.","Call a data transform to copy the case ID from pyWorkPage to the email.","Use the Insert Property feature of a Send Email step to add the case ID when composing the message dialog.","Create a required field for the case ID that must be entered by a user during the case process prior to sending the survey."],
+  correct:[2],
+  explanation:"Use the Insert Property feature in the Send Email step to automatically add the case ID to the survey email.",
+},
+{
+  id:15,
+  section:"Pega",
+  text:"How do you indicate the progress of a case towards resolution?",
+  type:"single",
+  options:["Design intent-driven user interfaces.","Use stages to show the case progressing toward resolution.","Configure a case notes field to capture progress information.","Apply service levels to the assignment steps."],
+  correct:[1],
+  explanation:"Use stages to indicate the progress of the case toward resolution in the case lifecycle.",
+},
+{
+  id:16,
+  section:"Pega",
+  text:"Which requirement demonstrates the need to configure correspondence?",
+  type:"single",
+  options:["Assign a new insurance claim to a case worker to process.","Phone a customer for additional information about the case.","Email the case worker when the insurance claim is routed to their worklist.","Case worker receives a mobile push notification to approve an insurance claim."],
+  correct:[2],
+  explanation:"Sending an email to a case worker when the claim is routed to their worklist demonstrates the need for correspondence configuration.",
+},
+{
+  id:17,
+  section:"Pega",
+  text:"Select each Process Step Description on the left and drag it to the appropriate Process Step on the right.",
+  type:"match",
+  pairs:[
+    {left:"The system evaluates the request type to determine the next step.",right:"Decision"},
+    {left:"The system notifies the user of the case status by email.",right:"Automation"},
+    {left:"A user enters information for an IT request.",right:"Collect Information"},
+    {left:"A manager determines whether an expense report proceeds or is rejected.",right:"Approval"}
+  ],
+},
+{
+  id:18,
+  section:"Pega",
+  text:"To the Answer Area, select the appropriate configuration type for each use case.",
+  type:"match",
+  pairs:[
+    {left:"Customers are asked a series of questions about their design preferences and are presented with a set of recommended products.",right:"Decision Tree"},
+    {left:"Research grants are screened by the Grant department, reviewed by functional experts, and approved by the Finance team.",right:"Decision Table"},
+    {left:"Requests to rent company office equipment require approval from the Facilities manager or IT manager.",right:"Neither a Decision table nor Decision tree"}
+  ],
+},
+{
+  id:19,
+  section:"Pega",
+  text:"An insurance claim case type is defined as follows. If the Review claim step is configured to set the status to Pending-Investigation, when is the status of the case set to Pending-Investigation?",
+  type:"single",
+  options:["When the Review claim step starts","When the Process claim stage starts","When Investigate claim step completes","When the Review claim step completes"],
+  correct:[0],
+  explanation:"The status is set when the Review claim step starts, because that step is configured to set the status at its start."  
+},
+{
+  id:20,
+  section:"Pega",
+  text:"You are designing a credit transaction case type and have the following requirement: Transaction disputes must be resolved within 3 days. To meet this requirement you need to set the ______ in the service level to 3 days.",
+  type:"single",
+  options:["Urgency","Goal","Deadline","Passed deadline"],
+  correct:[2],
+  explanation:"The service level deadline should be set to 3 days to enforce resolution within that timeframe."  
+},
+{
+  id:21,
+  section:"Pega",
+  text:"You are developing a case type to process visa application. As part of the process, applicants need to schedule an interview with the consulate.\nA child Interview case is created for the interview process and assessment.\nFollowing the interview, it typically takes 48 hours for the consulate to reach a decision.\nFor the visa case to proceed to applicant notification, the Interview case needs to be resolved.\nHow do you configurate a case type to achieve the required behavior?",
+  type:"single",
+  options:["Add a Create Case step that creates the Interview child case. Following this step, add a Wait step that pauses the parent case until 48 hours have elapsed.","Add a Create Case step that creates the Interview child case. Following this step, add a Wait step that pauses the parent case until the Interview case reaches a status of Resolved and after 48 hours have elapsed.","Add a Create Case step that creates the Interview child case. Following this step, add a Wait step. There is no need to add a Wait step.","Add a Create Case step that creates the Interview child case. Following this step, add a Wait step that pauses the parent case until the Interview case reaches a status of Resolved."],
+  correct:[3],
+  explanation:"The parent case should wait until the Interview child case reaches Resolved before proceeding to applicant notification."  
+},
+{
+  id:22,
+  section:"Pega",
+  text:"A company often receives multiple IT tickets for the same issue, such as 'The office Wi-Fi is down'.\nYou configure a Search duplicate cases step to identify duplicate IT tickets.\nWhat is the basic condition for the Search duplicate cases step?",
+  type:"single",
+  options:["Office location is same","Issue type is same","Department is same","Name of submitter is same"],
+  correct:[1],
+  explanation:"The basic duplicate condition is usually matching the issue type for tickets describing the same problem."  
+},
+{
+  id:23,
+  section:"Pega",
+  text:"A life insurance company has satellite offices in various countries. Each satellite office has a work queue. Company policy requires that life insurance underwriting be assigned to offices based on the policy owner's residential address.\nWhich routing approach supports this requirement?",
+  type:"single",
+  options:["Route the assignment to a specific underwriter based on business logic.","Route the assignment to the correct work queue based on business logic.","Route the assignment to the correct work queue by using an authority matrix.","Route the assignment to the correct work queue by using reporting structure."],
+  correct:[1],
+  explanation:"Routing to the correct work queue based on business logic supports address-based office assignment."  
+},
+{
+  id:24,
+  section:"Pega",
+  text:"A restaurant has a case type that allows customers to book the dining room for events. Customers provide basic information including party size and indicate whether they want the restaurant to cater the event.\n- If catering is not required, customers are given a rental rate quote.\n- If customer indicate that they want the restaurant to cater the event,  they must provide menu preferences and schedule an appoinment to  do menu before they are given a quote.\nWhich two options do you configure the case type to achieve the requests behavior (Choose Two)",
+  type:"multi",
+  options:["Create a process for customers to indicate menu preferences and schedule the menu tasting appointment. Add the process as a case-wide optional action.","Create a check box for customers to indicate whether they want the restaurant to cater the event. Configure the menu preferences and appointment date fields with a visibility condition.","Create a check box for customers to indicate whether they want the restaurant to cater the event. Add the decision shape that evaluates whether the customer checks the box.","Create a process for providing menu preferences and scheduling the menu tasting appointment. Create a parallel process for providing the customer with the rental rate quote."],
+  correct:[1,3],
+  explanation:"Use a checkbox and visibility conditions to show menu preference fields only when catering is selected."  
+},
+{
+  id:25,
+  section:"Pega",
+  text:"Which studio do you use to configure a service level agreement (SLA) with a passed deadline?",
+  type:"single",
+  options:["App Studio","Dev Studio","Admin Studio","Prediction Studio"],
+  correct:[1],
+  explanation:"SLAs with passed deadline configurations are done in Dev Studio."  
+},
+{
+  id:26,
+  section:"Pega",
+  text:"A travel authorization requires approvals from the requestor's manager, division VP, and possibly an accountant based on the total amount.\nWhich configuration satisfies this use case?",
+  type:"single",
+  options:["Cascading approval using an authority matrix","Cascading approval using the workgroup manager","Cascading approval using when rules to identify the assigned user","Cascading approval using the reporting manager"],
+  correct:[0],
+  explanation:"An authority matrix supports cascading approvals based on multiple roles and total amount conditions."  
+},
+{
+  id:27,
+  section:"Pega",
+  text:"A meal delivery service recommends a meal plan based on the number of people in the household and dietary restrictions.\nWhich two configurations must be used together to determine the recommended meal plan? (Choose Two)",
+  type:"multi",
+  options:["Configure a decision tree","Configure an assignment to gather customer information","Configure a decision shape to add conditional path","Configure a decision table"],
+  correct:[1,3],
+  explanation:"Gather customer information and use a decision shape to add conditional paths for meal plan recommendations."  
+},
+{
+  id:28,
+  section:"Pega",
+  text:"An airline has the following requirement: A passenger requiring a service animal must document the type of animal, the size of the animal, and any relevant medical information the crew may need during the flight. The application prompts the passenger for this information when the passenger declares travel with a service animal.\nWhich case life cycle configuration meets this requirement?",
+  type:"single",
+  options:["Add a process to the case life cycle for service animal accommodation and apply a condition to determine when to run the process.","Create a child case for service animal accommodation to automatically resolve unless the passenger requires the accommodation.","Apply an optional action to the appropriate stage to allow the passenger to provide the information as needed.","Configure a stage in the case life cycle for service animal accommodation and apply a stage validation condition."],
+  correct:[0],
+  explanation:"A conditional process in the case life cycle is appropriate when the service animal accommodation should run only if the passenger declares a service animal."  
+},
+{
+  id:29,
+  section:"Pega",
+  text:"In which two situations is it appropriate to use a decision table? (Choose Two)",
+  type:"multi",
+  options:["A gym recommends a membership type based on the number and type of fitness classes the customer wants to attend every month.","If customers decide to add insurance, checked bags, or early boarding to their airline tickets, extra fees are added to their order total.","A hair care company suggests a line of products to customers based on their hair type, scalp moisture, hair moisture, and whether it is color treated.","Order total is calculated based on the quantity and price of the items in the customer's shopping cart."],
+  correct:[0,2],
+  explanation:"Decision tables are useful for recommending outcomes based on combinations of multiple conditions, such as membership options or hair care product recommendations."  
+},
+{
+  id:30,
+  section:"Pega",
+  text:"A user must provide values to certain fields before submitting a job application form. Which configuration adds asterisks to indicate the mandatory fields on the form?",
+  type:"single",
+  options:["Select the Required option when configuring the view from the case life cycle","Configure a Disable when condition on the mandatory fields at runtime","Use a Validate rule to verify the mandatory fields have a value","Use an Edit Validate rule to verify if each of the mandatory properties has a value"],
+  correct:[0],
+  explanation:"Selecting the Required option in the view configuration adds asterisks to mandatory fields."  
+},
+{
+  id:31,
+  section:"Pega",
+  text:"You are designing a form to display item details for an online bookstore. Which layout do you use to display the book covers and details, as shown in the image?",
+  type:"single",
+  options:["Dynamic layout","Screen layout","Repeating Dynamic layout","Column layout"],
+  correct:[2],
+  explanation:"A Repeating Dynamic layout is used to display multiple book cover items with details in the same format."  
+},
+{
+  id:32,
+  section:"Pega",
+  text:"You need to test whether a user interface is suitable for users with visual disabilities, such as Deuteranopia (red-green confusion). How do you perform this task?",
+  type:"single",
+  options:["Unit test section rules","Use the Accessibility Inspector","Enable the live UI tool","Use a screen reader extension"],
+  correct:[1],
+  explanation:"The Accessibility Inspector is used to test UI suitability for visual disabilities like color blindness."  
+},
+{
+  id:33,
+  section:"Pega",
+  text:"All managers must be able to view the Employee vacation requests report in their Manager portal dashboards. Which configuration fulfills this requirement?",
+  type:"single",
+  options:["Add a report widget to the portal dashboard, and then click Publish to default","Add a report widget to the portal dashboard, and then click Publish.","Create a new landing page on the portal with the new report saved in public category.","Add the report to a public category, and then add the out-of-the-box Reports landing page to the portal."],
+  correct:[0],
+  explanation:"Publishing the report widget to the default portal dashboard makes it available to managers in their Manager portal dashboards."  
+},
+{
+  id:34,
+  section:"Pega",
+  text:"Which description explains how the configured events occur in the Cell Properties action set?",
+  type:"single",
+  options:["When a user refreshes the section, a data transform is applied. If the payment is confirmed, the Order ID value is set to the value of the Confirmation Number property.","When a user clicks the button, the section is refreshed, and a data transform is applied. If the payment is confirmed, the Order ID value is set to the value of the Confirmation Number property.","When a user clicks the button, the section is refreshed, a data transform is applied, and the Order ID value is set to the value of the Confirmation Number property.","If the payment is confirmed when the user clicks the button, the section is refreshed, a data transform is applied, and the Order ID value is set to the value of the Confirmation Number property."],
+  correct:[1],
+  explanation:"The configured action refreshes the section on click and applies a data transform when the payment is confirmed to set the Order ID from the Confirmation Number."  
+},
+{
+  id:35,
+  section:"Pega",
+  text:"Which control types allow you to display three balance transfer offers on a form with a single control, to prevent the customer from selecting more than one offer? (Choose Two)",
+  type:"multi",
+  options:["Drop down list","Button","Radio buttons","Checkbox"],
+  correct:[0,2],
+  explanation:"A drop down list and radio buttons allow only one selection from a single control set."  
+},
+{
+  id:36,
+  section:"Pega",
+  text:"A customer views a product that is available in multiple color options. The product color options are displayed without prompting or clicking, and the customer can select only one of the color options. Which UI control satisfies the requirement?",
+  type:"single",
+  options:["Drop down","Text input","Radio button","Checkbox"],
+  correct:[2],
+  explanation:"Radio buttons display multiple visible options and allow the user to select only one."  
+},
+{
+  id:37,
+  section:"Pega",
+  text:"A reservation process allows customers to reserve a flight, hotel room, and rental car as part of a travel itinerary. Which configuration displays the 'Select number of checked bags' section only if a user selects a check box?",
+  type:"single",
+  options:["A required condition (when rule) that is applied to the check box","A disable condition (when rule) that is applied to the check box","A visibility condition (when rule) that is applied to the Select number of checked bags section","A disable condition (when rule) that is applied to the Select number of checked bags section"],
+  correct:[2],
+  explanation:"Use a visibility condition on the section so it appears only when the checkbox is selected."  
+},
+{
+  id:38,
+  section:"Pega",
+  text:"Which two rules do you localize by using the Localization wizard? (Choose Two)",
+  type:"multi",
+  options:["Data page","Correspondence Fragment","Paragraph","Decision Table"],
+  correct:[1,2],
+  explanation:"The Localization wizard is used for localizing content rules such as correspondence fragments and paragraphs."  
+},
+{
+  id:39,
+  section:"Pega",
+  text:"In the Answer area, choose the correct test type for each test characteristic.",
+  type:"match",
+  pairs:[
+    {left:"Least number of tests in the test suite",right:"Scenario Test"},
+    {left:"Least expensive to run",right:"Unit Test"},
+    {left:"Easiest to maintain",right:"Unit Test"}
+  ],
+},
+{
+  id:40,
+  section:"Pega",
+  text:"Which two configuration steps must be performed together to record a unit test for automated testing? (Choose Two)",
+  type:"multi",
+  options:["Add a test case to the Automated Test landing page","Add an assertion to define an expected result","Select a ruleset that is configured to store the results of the test","Select a ruleset that is configured to store automated test cases"],
+  correct:[1,3],
+  explanation:"Recording a unit test requires defining expected results with assertions and selecting a ruleset configured to store automated test cases."  
+},
+{
+  id:41,
+  section:"Pega",
+  text:"Which two conditions do you test with a unit test? (Choose Two)",
+  type:"multi",
+  options:["A property value is set correctly by a data transform","An application displays user views for 20 users within three seconds","A data page populates without any errors","An application is successfully migrated to a test system"],
+  correct:[0,2],
+  explanation:"Unit tests verify specific application logic and data population behavior, not scalability or migration."  
+},
+{
+  id:42,
+  section:"Pega",
+  text:"A Bussiness Architect has developed a new process for a case type. To verify that the UI elements collect the expected results, you want to test the process and the fields.\nWhich two configurations, when used together, allow you to record a set of interactions and save the test results to verify process functionality? ( Choose two)",
+  type:"multi",
+  options:["Add exploit assertions on the UI elements","Add exploit assertions on the Scenario testing landing page","Create a scenario test for the case type","Create a unit test for the case type"],
+  correct:[1,2],
+  explanation:"A scenario test verifies that the UI elements work together to collect expected results for the case type."  
+},
+{
+  id:43,
+  section:"Pega",
+  text:"Doing playback a stakeholder prefers to group a set of existing action into the multistep form.\nWhich work item do you create in Agile Workbench to address this change request?",
+  type:"single",
+  options:["Status","Feedback","User Story","Bug"],
+  correct:[1],
+  explanation:"Feedback work items are used to capture stakeholder requests during playback sessions."  
+},
+{
+  id:45,
+  section:"Pega",
+  text:"Before development, your team creates a spreadsheet with work items to populate backlog. All work items that describe business requirements are prioritized as Must have. You also create work items to address:\n- A future enhancement request to group a set of existing steps into a multistep form.\n- A drop-down list that is missing one of the requirement options. This work item is in progress because the missing option prevents work from being done.\nHow do you populate the backlog directly from the spreadsheet?",
+  type:"single",
+  options:["Create bugs","Create feedback","Import stories","Create stories"],
+  correct:[2],
+  explanation:"Import stories populates the backlog directly from the spreadsheet with business requirement work items."  
+},
+{
+  id:46,
+  section:"Pega",
+  text:"A developer is attempting to reference a validate rule called ValidatedCustomer from a flow action applied to a case type class called ACME-IT-Work. The case type class directly inherits from the Work- class. The case type class does not contain a ValidatedCustomer validate rule. Place the class in the order in which Pega searches for the ValidatedCustomer validate rule, from first to last.",
+  type:"match",
+  pairs:[
+    {left:"ACME-",right:"3"},
+    {left:"ACME-IT",right:"2"},
+    {left:"ACME-IT-Work",right:"1"},
+    {left:"@baseclass",right:"5"},
+    {left:"Work-",right:"4"},
+  ],
+},
+{
+  id:47,
+  section:"Pega",
+  text:"Which two components on the Case Designer can users assign to a minimum Lovable Product (MLP) for project sizing purposes? (Choose Two)",
+  type:"multi",
+  options:["An external system of record (SOR)","An approval decision","A mobile User Portal","An automation"],
+  correct:[0,2],
+  explanation:"Users can assign components such as an external system of record and a mobile User Portal to MLP for sizing."  
+},
+{
+  id:48,
+  section:"Pega",
+  text:"For which use case do you create a new rule in a Pega platform application?",
+  type:"single",
+  options:["A developer makes change an email message configured in the case life cycle.","A business user issues a change request for the application to set the default value of a field.","A developer create a parallel process to audit changes that a service agent makes.","A designer reuses a UI section every time the same behavior is needed in the application."],
+  correct:[2],
+  explanation:"Creating a new rule is appropriate when adding a parallel process to audit changes that a service agent makes."  
+},
+{
+  id:49,
+  section:"Pega",
+  text:"Which two statements are true about minimum Lovable Product (MLP) sizing when using the Estimator tool? (Choose Two)",
+  type:"multi",
+  options:["Initial estimations are high level and can be referred during sizing","Creation of case steps is factored into MLP sizing","MLP complexities set to 'high' are reserved for MLP 2 and later","MLP sizing leads to precision in the sprint cycle and resource planning"],
+  correct:[1,3],
+  explanation:"MLP sizing factors in case steps and helps improve precision in sprint cycle and resource planning."  
+},
+{
+  id:50,
+  section:"Pega",
+  text:"To qualify for an instant loan, an applicant must earn a monthly income of at least GBP2000 and cannot exceed GBP20000 in credit card debt. How do you enforce these restrictions when requesting an instant loan?",
+  type:"single",
+  options:["Use a single Validate rule with two conditions: one for income and one for credit card debt","Use a Validate rule to call two Edit validate rules: one for income and one for credit card debt","Use UI controls to validate the metric in the income and credit card debt fields","Use two Edit validate rules: one for income and one for credit card debt"],
+  correct:[0],
+  explanation:"Separate Edit Validate rules are used for each field to enforce income and credit card debt restrictions."  
+},
+{
+  id:51,
+  section:"Pega",
+  text:"When a user selects an item in a list, application displays data about that item. Data is copied to a page property using the Copy data from the data page option. When does the copy occur?",
+  type:"single",
+  options:["When the item is changed","Never","The next time the case is opened","The next time the property is accessed"],
+  correct:[0],
+  explanation:"Copying from the data page happens when the property is accessed, not immediately on selection."  
+},
+{
+  id:52,
+  section:"Pega",
+  text:"In a Credit Card Payment case type, you want to set the payment amount to the minimum amount due when a user creates a case. How do you set the payment amount?",
+  type:"single",
+  options:["Configure the payment amount field to reference the minimum amount due","Configure the payment amount field as a calculated field","Configure the pySetFieldDefaults data transform to set the default value","Configure a field validation on the payment amount"],
+  correct:[2],
+  explanation:"pySetFieldDefaults is used to assign default field values when a case is created."  
+},
+{
+  id:53,
+  section:"Pega",
+  text:"What is the relationship between pyWorkPage and case data?",
+  type:"single",
+  options:["pyWorkPage contains only the data generated by the system while creating and processing a case","pyWorkPage contains all the case data generated while creating and processing a case","pyWorkPage contains only the data entered by users while creating and processing a case","pyWorkPage contains all the data pages accessed while creating and processing a case"],
+  correct:[1],
+  explanation:"pyWorkPage contains all case data generated while a case is created and processed."  
+},
+{
+  id:54,
+  section:"Pega",
+  text:"In the Answer Area, select the Data Transform configuration that defaults the Quantity property value on a Purchase Request case to 1.",
+  type:"single",
+  options:["Set Quantity equal to 1","Set Quantity with value from .Quantity","Update Page with source 1","Apply Data Transform with source 1"],
+  correct:[0],
+  explanation:"The correct configuration sets Quantity with source equal to 1 to default the value."  
+},
+{
+  id:55,
+  section:"Pega",
+  text:"A car insurance quote requires a view for potential customers to enter information to process the request. What are two primary decisions to make before you add fields to the view? (Choose Two)",
+  type:"multi",
+  options:["Is field entry required?","Does the field require a data source?","How do users enter values into the field?","Are processing actions applied to the field?"],
+  correct:[0,2],
+  explanation:"Before adding fields, decide whether entry is required and how users will enter values."  
+},
+{
+  id:56,
+  section:"Pega",
+  text:"Which issue do you address by simulating a data source?",
+  type:"multi",
+  options:["You need to test a save plan for a savable data page that updates the cost of coverage options for insurance policies.","The product database moves to a new data source accessible by a web service that is not yet configured.","In production, the customer database needs to be taken off-line overnight for scheduled maintenance.","An Embedded data field needs simulated data for testing a customer creation view."],
+  correct:[1,2],
+  explanation:"Simulating a data source is used when the real external service is not yet configured for integration testing."  
+},
+{
+  id:57,
+  section:"Pega",
+  text:"Which two statements about data records are true? (Choose Two)",
+  type:"multi",
+  options:["Data records are displayed in a drop-down list by default","Data records require external storage","Data records define permissible values of data fields","Data records are displayed in a searchable text field by default"],
+  correct:[0,2],
+  explanation:"Data records define permissible field values and are often displayed through searchable fields."  
+},
+{
+  id:58,
+  section:"Pega",
+  text:"Which two data requirements ensure valid data? (Choose Two)",
+  type:"multi",
+  options:["The data is locally source","The data fits the business logic","The data is the correct type","The data is organized in a data type"],
+  correct:[1,2],
+  explanation:"Valid data must fit the business logic and be the correct type."  
+},
+{
+  id:59,
+  section:"Pega",
+  text:"The retail store wants the application to process a new customer loyalty account. The customer enters their contact information, including name, email, phone number, and address. This information is displayed in a data relationship.",
+  type:"single",
+  options:["An Embedded data field","A Case reference data field","A Query field","A Data Reference field"],
+  correct:[0],
+  explanation:"Customer contact information displayed through a data relationship is modeled as a Data Reference field."  
+},
+{
+  id:60,
+  section:"Pega",
+  text:"Which two items must be provided by the user to add an external data resource to a data object? (Choose Two)",
+  type:"multi",
+  options:["A simulated data source to test the implementation","A Data transform to map the Application data model to the connector","Authorizing information, if required by the corresponding service","The uniform resource identifier that identifies the web service"],
+  correct:[2,3],
+  explanation:"External data resources require authorizing information if needed and the URI identifying the service."  
+},
+{
+  id:61,
+  section:"Pega",
+  text:"Which option follows best practices for naming a ruleset in Pega Platform?",
+  type:"single",
+  options:["Expense:01-02-05","Credit Check:03-01-02","Pega-Proj:01-04-01","Grand-Corporation-Human-Resources-Department:01-01-03"],
+  correct:[0],
+  explanation:"Expense:01-02-05 follows best practices without spaces or overly long keywords."  
+},
+{
+  id:62,
+  section:"Pega",
+  text:"In an online retail application, the Order Receipt view displays a list of the products ordered, including product image, unit cost, and quantity. The total cost of the order is displayed at the bottom of the view.\nWhich two configurations on the Order Receipt view must be used together to display the required information as described? (Choose Two)",
+  type:"multi",
+  options:["Add the total cost outside the repeating dynamic layout.","Add the total cost inside the repeating dynamic layout.","Add a dynamic layout with an embedded repeating dynamic layout.","Add a repeating dynamic layout with embedded dynamic layouts."],
+  correct:[0,3],
+  explanation:"The order total belongs outside the repeating layout, and the view should use a repeating dynamic layout with embedded dynamic layouts."  
+},
+{
+  id:63,
+  section:"Pega",
+  text:"In the Answer Area, select the appropriate accessibility role for each element.",
+  type:"match",
+  pairs:[
+    {left:"Dropdown control",right:"Component/widget"},
+    {left:"User instructions",right:"Document structure"},
+    {left:"Navigation breadcrumbs",right:"Landmark"}
+  ],
+},
+{
+  id:64,
+  section:"Pega",
+  text:"You need to localize correspondence into a language that is unavailable in the Pega language pack. Which option satisfies the requirement?",
+  type:"single",
+  options:["Create the Translation rule manually and include the rule in the application ruleset.","Run the Localization wizard and add translations to Translation.html.","Configure a field value record that contains the correspondence text.","Leverage translation services SOAP calls and enable records for translation."],
+  correct:[1],
+  explanation:"To localize correspondence into an unavailable language, run the Localization wizard and add translations to Translation.html."  
+},
+{
+  id:65,
+  section:"Pega",
+  text:"Which two control types allow you to display three balance transfer offers on a form with a single control, to prevent the customer from selecting more than one offer? (Choose Two)",
+  type:"multi",
+  options:["Button","Drop-down list","Radio buttons","Checkbox"],
+  correct:[1,2],
+  explanation:"Drop-down lists and radio buttons allow selection of only one offer from a single control."  
+},
+{
+  id:66,
+  section:"Pega",
+  text:"University admission application cases automatically advance in the case life cycle if the applicant's standardized test scores are above a certain threshold. The threshold is determined each year based on the provided national average score. Which two configurations, when applied together, support this requirement? (Choose Two)",
+  type:"multi",
+  options:["Configure a process with a decision shape that continues if the TestThresholdConfiguration setting is less than the applicant's test score.","Configure a TestThreshold Configuration setting with the national average for the test score threshold.","Configure a TestThreshold Configuration setting that calculates the national average for the test score threshold.","Configure a process with a decision shape that continues if the TestThreshold Configuration setting is greater than the applicant's test score."],
+  correct:[1,0],
+  explanation:"You need a TestThreshold Configuration with the national average and a decision shape that continues when the applicant's score exceeds the threshold."  
+},
+{
+  id:68,
+  section:"Pega",
+  text:"Đi thi có 1 câu cho 4 đáp án 2 bên và yêu cầu kéo thả cho mapping với nhau, mọi người chú ý chọn thế này nhé( chú ý chữ đậm )",
+  type:"match",
+  pairs:[
+    {left:"Làm file security",right:"chọn PDF"},
+    {left:"Ship đồ đến báo ngày giờ đến người order",right:"chọn Email"},
+    {left:"Nhân viên chờ duyệt cấp trên duyệt gì đó",right:" chọn Approve"},
+    {left:"Hệ thống giải quyết .....",right:"chọn Decision"}
+  ],
+},
+{
+  id:69,
+  section:"Pega",
+  text:"Có 1 câu hỏi về perfomance, nó cho 1 cái ảnh và nhiều rule, chọn 3 trong 4 đáp án. Chọn 3 cái có rule 3,4,5, tức là chọn 3 cái lớn nhất theo như trong ảnh. Nói đơn giản là tối ưu cái gì đó thì ưu tiên chọn mấy cái nhiều nhất có thể",
+  type:"single",
+  options:[
+    "Thuộc chưa?",
+  ],
+  correct:[0],
+  explanation:"Chọn 3 cái có rule 3,4,5, tức là chọn 3 cái lớn nhất theo như trong ảnh. Nói đơn giản là tối ưu cái gì đó thì ưu tiên chọn mấy cái nhiều nhất có thể"
+},
+{
+  id:70,
+  section:"Pega",
+  text:"An online sales application supports both laptop and mobile devices. You are configuring the application skin and you notice the responsive layout in the mobile device is not displaying views as stakeholders require. Which two options allow you to resolve this situation without negatively impacting the laptop users? (Choose Two)",
+  type:"multi",
+  options:["Use the same application skin in all portals.","Update the process to give mobile users a separate portal.","Do not use a skin for the mobile application version.","Adjust the responsive behavior in the skin for optimal viewing in the mobile portal."],
+  correct:[0,3],
+  explanation:"Use the same skin across portals and adjust the responsive behavior for mobile so laptop users are not negatively impacted."  
+},
+{
+  id:71,
+  section:"Pega",
+  text:"Có 1 câu hỏi là khi dự án ko đúng tiến độ thì liên lạc ai Chọn Scum master",
+  type:"single",
+  options:["Thuộc chưa?"],
+  correct:[0],
+  explanation:"Khi dự án ko đúng tiến độ thì liên lạc ai Chọn Scum master"  
+},
+{
+  id:72,
+  section:"Pega",
+  text:"An online car parts business wants customers to find parts easily. You are asked to implement the following requirement: Customers must select a make, model, and year to initiate a vehicle-specific search.\nHow do you configure the data storage in the application to implement the requirement?",
+  type:"single",
+  options:["Configure a static list of the make, model, and year vehicles.","Configure a local data storage of the make, model, and year of the vehicle.","Configure a connection to a system of record using the External Database Mapping Wizard.","Configure a data page to store the make, model, and year data."],
+  correct:[2],
+  explanation:"Use the External Database Mapping Wizard to connect to a system of record for the vehicle data."  
+},
+{
+  id:73,
+  section:"Pega",
+  text:"In a claims application, customers can file home insurance claims. Each claim contains a list of items of loss.\nDepending on circumstances, some claims are investigated for potential fraud in parallel to the actual claim process.\nWhich two entities would you model as case type? (Choose Two)",
+  type:"multi",
+  options:["Customer","Claim","Items of loss","Fraud investigation"],
+  correct:[1,2],
+  explanation:"Claim and Items of loss are the entities that are modeled as case types in this scenario."  
+},
+{
+  id:74,
+  section:"Pega",
+  text:"In an Order case type, a percentage-based discount is automatically applied to a customer's order based on:\n-The number of years the customer has been a member\n-The membership type (Standard, Silver, or Gold)\nHow do you configure a Configuration setting to determine the discount?",
+  type:"match",
+  pairs:[
+    {left:"Type",right:"Decimal"},
+    {left:"Default value",right:"Calculated value from decision table"}
+  ],
+},
+{
+  id:75,
+  section:"Pega",
+  text:"Có 1 câu liên quan đến ugency, nó hỏi từ giai đoạn init, goal, deadline các thứ thì sau mỗi giai đoạn bao nhiêu gold thì điền 3 chỗ thứ tự lần lượt là 30,40,50",
+  type:"single",
+  options:["Thuộc chưa?"],
+  correct:[0],
+  explanation:"Hỏi từ giai đoạn init, goal, deadline các thứ thì sau mỗi giai đoạn bao nhiêu gold thì điền 3 chỗ thứ tự lần lượt là 30,40,50"
+},
+{
+  id:76,
+  section:"Pega",
+  text:"Match the requirement with the correct data page configuration.",
+  type:"match",
+  pairs:[
+    {left:"Flight status and information remain current each time a customer accesses their reservation.",right:"Configure a property to refer to a data page"},
+    {left:"Item quantity and pricing must be captured at the time an order is placed and do not update when the case is accessed later.",right:"Configure a property to copy data from a data page"},
+    {left:"Customers must see all of the available mortgage options, but only the selected option is recorded as a part of the case.",right:"Configure a UI control to source data from a data page"}
+  ],
+},
+{
+  id:77,
+  section:"Pega",
+  text:"Match each item with the correct page type.",
+  type:"match",
+  pairs:[
+    {left:"Current order",right:"Data pages"},
+    {left:"Customer information",right:"User pages"},
+    {left:"Previous orders",right:"System pages"}
+  ],
+},
+{
+  id:78,
+  section:"Pega",
+  text:"Match each event with its execution order when a customer submits payment.",
+  type:"match",
+  pairs:[
+    {left:"A user clicks the button.",right:"1"},
+    {left:"The order ID value is set to the value of the confirmation number if the system confirms the payment.",right:"4"},
+    {left:"The system applies a data transform.",right:"3"},
+    {left:"The system refreshes the section.",right:"2"},
+  ],
+},
 
-  {id:167,section:"Matching: CSDM Domains",text:"An Enterprise Architect needs to help the CMDB owner understand the benefits of CSDM. Match each CSDM domain to its respective benefit.",type:"match",
-  pairs:[
-    {left:"Foundation",right:"Understand CIs related to business application and related capabilities to identify redundancies, monitor costs and make better investment decisions around roadmap"},
-    {left:"Design and Planning",right:"Understand technical services, technical service offerings, service support and all relationships to underlying technology CIs"},
-    {left:"Service Consumption",right:"Understand business services and ownership, cost, scope of what is offered to the business/consumer and request access to the business services"},
-    {left:"Service Delivery",right:"Use the base system tables when implementing the CSDM to derive the highest value from ServiceNow products and the Now Platform"}
-  ],
-  explanation:"Foundation = business application CI understanding and investment decisions. Design and Planning = technical services and their relationships. Service Consumption = business service ownership and consumer access. Service Delivery = base system tables and platform value."},
+{
+  id:79,
+  section:"Pega",
+  text:"In a customer registration case type, users must enter the name, email, address, and ______ in a data object. What field type do you configure to reference this information?",
+  type:"single",
+  options:["Data reference","Embedded data","Query","User reference"],
+  correct:[1],
+  explanation:"Embedded data is used when the user enters fields like name, email, and address directly into a data object."  
+},
+{
+  id:80,
+  section:"Pega",
+  text:"There are two lines of business for a company with different branding requirements. Both customers and CSR must be provided with mobile channel access for the application. What of the following effects increases the number of different mobile channels? (Choose Two)",
+  type:"multi",
+  options:["Using different color pallets","Customer and CSR can initiate different case types","Mobile channels can be accessible by both tabs and mobile phones","Have to localize based on Date/Time Zone, local language of the operator"],
+  correct:[0,1],
+  explanation:"Different mobile channels can be created by using different color palettes and allowing customer and CSR to initiate different case types.\nNếu bảo chọn 2 thì là A, B, chọn 1 thì phải chọn A. Using diffirent color pallets "  
+},
 
-  {id:168,section:"Matching: CMDB Health Dashboard",text:"The CMDB Health Dashboard is based on three KPIs: Correctness, Compliance, and Completeness. Match each sub-metric to its KPI.",type:"match",
-  pairs:[
-    {left:"Required",right:"Completeness"},
-    {left:"Audit",right:"Compliance"},
-    {left:"Orphan",right:"Correctness"}
-  ],
-  explanation:"Completeness tracks whether required and recommended fields are populated — hence 'Required' belongs here. Compliance tracks certification and audit activity — 'Audit' belongs here. Correctness tracks data accuracy including orphan, stale, and duplicate CIs — 'Orphan' belongs here."},
-
-  {id:169,section:"Matching: CMDB Data Ingestion",text:"Match each ServiceNow product to its description.",type:"match",
-  pairs:[
-    {left:"ServiceNow Discovery",right:"Automatically identifies devices and applications in the network, populating the CMDB with accurate and up-to-date information"},
-    {left:"Service Graph Connectors",right:"Facilitates integration between ServiceNow and external systems to import and synchronize data"},
-    {left:"Agent Client Collector (ACC)",right:"Completes topology of the services and shows how they are supported by underlying infrastructure and applications"},
-    {left:"Service Mapping",right:"Provides real-time visibility into endpoint configurations, populating the CMDB with accurate and up-to-date information"}
-  ],
-  explanation:"Discovery = agentless network scanning. Service Graph Connectors = pre-built third-party integrations. ACC = agent-based topology for devices that can't be reached by agentless discovery. Service Mapping = real-time service topology visibility."},
-
-  {id:170,section:"Matching: CMDB 360 & Multisource",text:"A CMDB Administrator needs to set up CMDB 360/Multisource CMDB. Match each system property to its functionality.",type:"match",
-  pairs:[
-    {left:"Enables CMDB 360",right:"glide.identification_engine.multisource_enabled"},
-    {left:"Enables capturing CMDB 360 data for CIs from CMDB classes",right:"glide.identification_engine.multisource_cmdb_ci_enabled"},
-    {left:"Enables logging for CMDB 360",right:"glide.cmdb.logger.source.cmdb_multisource"},
-    {left:"Maximum number of CIs that can be included in a CMDB 360 recompute operation",right:"glide.identification_engine.multisource.recompute.max.ci.limit"}
-  ],
-  explanation:"multisource_enabled = master switch for CMDB 360. multisource_cmdb_ci_enabled = enables data capture per CI from CMDB classes. cmdb_multisource logger = controls logging. recompute.max.ci.limit = caps the number of CIs processed in one recompute job."},
-
-  {id:171,section:"Matching: CMDB Data Ingestion",text:"ServiceNow provides a suite of CMDB management tools designed to effectively ingest, manage, and maintain CIs and relationships. Match each design architecture to its management tool.",type:"match",
-  pairs:[
-    {left:"Automated agent-based solution running patterns",right:"Agent Client Collector"},
-    {left:"Organization-built solution using transform maps",right:"Import Sets"},
-    {left:"Pre-built store integration solutions that require minimal customization",right:"Service Graph Connector"},
-    {left:"Automated agentless solution running patterns",right:"ServiceNow Discovery"}
-  ],
-  explanation:"ACC = agent-based (software installed on endpoint). Import Sets = custom transform maps built by the org. Service Graph Connector = pre-built store solutions, minimal setup. Discovery = agentless, runs patterns automatically across the network."},
-  {id:172,section:"IRE & Identification Rules",text:"A Windows server is reclassified from the Server table [cmdb_ci_server] to the Windows Server table [cmdb_ci_win_server] when processed through the Identification and Reconciliation Engine (IRE).\n\nWhich process occurred?",type:"single",options:["Class Upgrade","Class Downgrade","Class Switch","Class Change"],correct:[2],explanation:"A Class Switch occurs when the IRE reclassifies a CI from one class to a more specific subclass — in this case from the generic Server [cmdb_ci_server] to the more specific Windows Server [cmdb_ci_win_server]. This is the correct IRE terminology for this process."}
+{
+  id:81,
+  section:"Pega",
+  text:"Which of the following situations would you have to simulate data?",
+  type:"single",
+  options:["Product database is moved to another source from a webservice which is not yet configured","In testing environment application needs to be tested without exposing client data","In production make the database offline for maintenance purposes"],
+  correct:[0],
+  explanation:"Simulating a data source is appropriate when the external web service is not yet configured for integration testing."  
+},
+{
+  id:82,
+  section:"Pega",
+  text:"A car insurance quote requires a view for potential customers to enter information to process the request. What are two primary decisions to make before you add fields to the view? (Choose Two)",
+  type:"multi",
+  options:["Is field entry required?","How do users enter values into the field?","Does the field require a data source?","Are processing actions applied to the field?"],
+  correct:[0,1],
+  explanation:"Decide whether entry is required and how users will enter values before adding fields to a view."  
+},
+{
+  id:83,
+  section:"Pega",
+  text:"What are the two correct statements about data types?",
+  type:"multi",
+  options:["When creating data objects from App Studio, the data type is created in Dev Studio","Data types can have fields by inheritance","Data types always require external storage","Data types cannot be modified after creation"],
+  correct:[0,1],
+  explanation:"When creating data objects from App Studio the data type is created in Dev Studio, and data types can inherit fields."  
+},
+{
+  id:84,
+  section:"Pega",
+  text:"For an approve/reject step, the approver needs to approve from email and mobile phone. How can this be configured?",
+  type:"single",
+  options:["Configure mobile approval and send email step","Enable push notification and send email","Add a manual approval task","Use a third-party approval gateway"],
+  correct:[1],
+  explanation:"Enabling push notifications plus sending an email allows approvers to act from mobile and email."  
+},
+{
+  id:85,
+  section:"Pega",
+  text:"You are designing a case type that includes a process to perform when a case is rejected. How do you model this requirement in the case life cycle?",
+  type:"single",
+  options:["Add a primary stage and add the rejection process to the stage.","Add an alternate stage and add the rejection process as an optional process to the stage.","Add an alternate stage and add the rejection process to the stage.","Add the rejection process to all the primary stages as an optional process.","Function"],
+  correct:[2],
+  explanation:"Add an alternate stage and include the rejection process in that stage to model a rejection flow."  
+},
+{
+  id:86,
+  section:"Pega",
+  text:"You have created a series of forms for a vacation booking process. Declarative expressions are used to calculate values such as the cost of the flight, hotel, car rental, and taxes. The last form includes a field that displays the total amount that will be charged on the user's credit card. How do you configure the calculations so that the total amount is calculated only when the user reaches the last form?",
+  type:"single",
+  options:["Use the backward chaining option for all the expressions.","Use the backward chaining option for the total amount expression. Use forward chaining for all the other expressions.","Use the forward chaining option for all the expressions.","Use the forward chaining option for the total amount expression. Use backward chaining for all the other expressions."],
+  correct:[1],
+  explanation:"Backward chaining for the total amount ensures it is evaluated on demand (when accessed on the last form), while other expressions can use forward chaining."  
+},
+{
+  id:87,
+  section:"Pega",
+  text:"You have been asked to create a sequence of user forms for a travel reservation process. The forms contain fields that require calculation. For which reason do you use a declare expression to calculate values?",
+  type:"single",
+  options:["To perform the calculation in a specific case stage","To perform the calculation when the user clicks a button","To perform the calculation when a form is submitted","To perform the calculation wherever a field is updated"],
+  correct:[3],
+  explanation:"Declare expressions recalculate automatically whenever referenced fields are updated, so use them to perform calculations whenever a field changes."  
+},
+{
+  id:88,
+  section:"Pega",
+  text:"A Service Request case type has a CustomerGrade property. How do you set the value of the CustomerGrade property to Silver when a service request case is created?",
+  type:"single",
+  options:["Configure the CustomerGrade property with a default value.","Configure the pyDefault data transform to set the CustomerGrade property value.","Configure a declare expression to set the CustomerGrade property value.","Configure the first connector in the first flow rule to set the CustomerGrade property value."],
+  correct:[1],
+  explanation:"Use the pyDefault data transform to set initial property values when a case is created."  
+},
+{
+  id:89,
+  section:"Pega",
+  text:"In an application, three email addresses (work, home, and other) can be captured for a customer. You use .Email (work) to refer to the work email address. What type of property is used to capture the email addresses?",
+  type:"single",
+  options:["Page","Value group","Value list","Page group"],
+  correct:[1],
+  explanation:"A value group groups related scalar properties like multiple email addresses under one parent."  
+},
+{
+  id:90,
+  section:"Pega",
+  text:"ABC Corp requires that expenses billable to a client are reviewed by an auditor in the Finance department. After the auditor approves the expenses, the client is billed. You create the work party for the auditor as an instance of which class?",
+  type:"single",
+  options:["Data-Party-Org","Data-Party-Operator","Data-Party-Com","Data-Party-Person"],
+  correct:[1],
+  explanation:"The auditor role is represented by a Data-Party-Operator (an operator/work party) instance."  
+},
 ];
