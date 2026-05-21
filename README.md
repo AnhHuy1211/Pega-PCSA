@@ -1,6 +1,4 @@
-# CIS – Data Foundations Practice Test
-### Certified Implementation Specialist – Data Foundations (CMDB and CSDM)
-
+# Pega - PCSA Practice Test
 A fully static, mobile-friendly practice test with **164 unique questions** covering all core exam objectives.
 
 ## 📁 File Structure
